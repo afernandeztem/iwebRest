@@ -108,7 +108,7 @@ public class EntregaFacadeREST extends AbstractFacade<Entrega> {
       @GET
     @Path("getFechaEntregaNotNull")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Entrega> find() {
+    public List<Entrega> getFechaEntregaNotNull() {
          Query q;
         q = this.em.createQuery("Select e FROM Entrega e WHERE e.fechaEntrega IS NOT NULL");
         return (List) q.getResultList();
@@ -128,7 +128,7 @@ public class EntregaFacadeREST extends AbstractFacade<Entrega> {
     @GET
     @Path("filtrarPorTiempo/{d1}/{d2}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Entrega> findRange(@PathParam("d1") String d1, @PathParam("d2") String d2) throws ParseException {
+    public List<Entrega> filtrarPorTiempo(@PathParam("d1") String d1, @PathParam("d2") String d2) throws ParseException {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = format.parse(d1);
         Date date2 = format.parse(d2);
