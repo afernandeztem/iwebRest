@@ -6,6 +6,13 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
+    <f:metadata>
+        <f:viewParam name="refresh" value="#{misSeriesManagedBean.refresh}"/>
+        <f:viewParam name="eliminate" value="#{misSeriesManagedBean.eliminate}"/>
+        <f:event type="preRenderView" listener="#{misSeriesManagedBean.onParameterReceived()}" />
+    </f:metadata>
+
+
     <h:head>
         <title>ListaSeries</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
@@ -16,7 +23,12 @@
 
         <ui:include src="/WEB-INF/navbar-Series.xhtml"/>
 
-        
+        <div align="center" style="margin-top: 20px">
+            <h:form>
+                <h:commandButton style="margin-right: 10px" class="btn btn-outline-dark" type="submit" value="Best Serie" action="#{misSeriesManagedBean.bestSerie()}" />
+                <h:commandButton class="btn btn-outline-dark" type="submit" value="Worst Serie" action="#{misSeriesManagedBean.worstSerie()}" />
+            </h:form>
+        </div>
 
         <div class="card-columns" style="padding: 10px; position: relative">
             <ui:repeat  value="#{misSeriesManagedBean.series}" var="serie" rendered="#{!(misSeriesManagedBean.series.size() == 0)}">

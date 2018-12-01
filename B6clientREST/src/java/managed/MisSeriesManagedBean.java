@@ -5,7 +5,9 @@
  */
 package managed;
 
+import client.EntregaClient;
 import client.SerieClient;
+import client.HasEntregaClient;
 import entity.Entrega;
 import entity.Serie;
 import java.io.Serializable;
@@ -25,15 +27,12 @@ import javax.xml.ws.WebServiceRef;
 @RequestScoped
 public class MisSeriesManagedBean implements Serializable {
 
-
     private List<Serie> series;
-    /*private String busqueda;
+    private String busqueda;
     private List<Serie> resultadoBusqueda = null;
     private Integer refresh = 0;
     private int eliminate = 0;
 
-    
-    
     public int getEliminate() {
         return eliminate;
     }
@@ -41,7 +40,6 @@ public class MisSeriesManagedBean implements Serializable {
     public void setEliminate(int eliminate) {
         this.eliminate = eliminate;
     }
-    
 
     public Integer getRefresh() {
         return refresh;
@@ -50,7 +48,6 @@ public class MisSeriesManagedBean implements Serializable {
     public void setRefresh(Integer refresh) {
         this.refresh = refresh;
     }
-    */
 
     /**
      * Creates a new instance of IndexManagedBean
@@ -58,7 +55,6 @@ public class MisSeriesManagedBean implements Serializable {
     public MisSeriesManagedBean() {
     }
 
-    
     /*@PostConstruct
     public void init() {
         this.series = resultadoBusqueda;
@@ -69,23 +65,30 @@ public class MisSeriesManagedBean implements Serializable {
         return "misSeries";
     }
 
-    
     private void obtenerSeries() {
         SerieClient client = new SerieClient();
         Response r = client.findAll_XML(Response.class);
         if (r.getStatus() == 200) {
-            GenericType<List<Serie>> genericType = new GenericType<List<Serie>>(){};
+            GenericType<List<Serie>> genericType = new GenericType<List<Serie>>() {
+            };
             List<Serie> allSeries = r.readEntity(genericType);
             this.series = allSeries;
-        }else{
+        } else {
             this.series = new ArrayList<Serie>();
         }
     }
 
-
-    /*
     public String buscar() {
-        this.series = this.findSerieConTitulo(this.busqueda);
+        SerieClient client = new SerieClient();
+        Response r = client.findConTitulo_XML(Response.class, this.busqueda);
+        if (r.getStatus() == 200) {
+            GenericType<List<Serie>> genericType = new GenericType<List<Serie>>() {
+            };
+            List<Serie> allSeries = r.readEntity(genericType);
+            this.series = allSeries;
+        } else {
+            this.series = new ArrayList<Serie>();
+        }
         return "misSeries";
     }
 
@@ -97,6 +100,28 @@ public class MisSeriesManagedBean implements Serializable {
         }
         this.series.add(this.getBestValSerie());
         return "misSeries";
+    }
+
+    private Serie getBestValSerie() {
+        SerieClient client = new SerieClient();
+        Response r = client.getBestValSerie_XML(Response.class);
+        if (r.getStatus() == 200) {
+            GenericType<Serie> genericType = new GenericType<Serie>() {
+            };
+            return r.readEntity(genericType);
+        }
+        return null;
+    }
+
+    private Serie getWorstValSerie() {
+        SerieClient client = new SerieClient();
+        Response r = client.getWorstValSerie_XML(Response.class);
+        if (r.getStatus() == 200) {
+            GenericType<Serie> genericType = new GenericType<Serie>() {
+            };
+            return r.readEntity(genericType);
+        }
+        return null;
     }
 
     public String worstSerie() {
@@ -121,26 +146,33 @@ public class MisSeriesManagedBean implements Serializable {
         return busqueda;
     }
 
-    
     public void setBusqueda(String busqueda) {
         this.busqueda = busqueda;
     }
-*/
+
     public List<Serie> getSeries() {
         return series;
     }
-/*
+
     public void onParameterReceived() {
         // En progreso, Edu.
-			if(this.eliminate != 0){
-				List<Entrega> entregasEliminar = this.findEntregasConIdSerie(eliminate);
-				for(Entrega e : entregasEliminar){
-					this.removeEntrega(e);
-				}
-				this.removeSerie(this.findSerieConId(eliminate));
-				obtenerSeries();
-				this.eliminate = 0;
-			}
+        EntregaClient clienteEntrega = new EntregaClient();
+        SerieClient clienteSerie = new SerieClient();
+        HasEntregaClient hasEntregaClient = new HasEntregaClient();
+        if (this.eliminate != 0) {
+            Response responseEntregas = hasEntregaClient.findEntregaConIdSerie_XML(Response.class, String.valueOf(eliminate));
+            if (responseEntregas.getStatus() == 200) {
+                GenericType<List<Entrega>> genericType = new GenericType<List<Entrega>>() {
+                };
+                List<Entrega> entregasEliminar = responseEntregas.readEntity(genericType);
+                for (Entrega e : entregasEliminar) {
+                    clienteEntrega.remove(e.getId().toString());
+                }
+            }
+            clienteSerie.remove(String.valueOf(eliminate));
+            obtenerSeries();
+            this.eliminate = 0;
+        }
         System.out.println("WAKI Hola en series he recibido un parametro BIENN");
         if (this.refresh == 1) {
             System.out.println("WAKI HE ENTRADO EN EL IF DE PARAMETER");
@@ -150,10 +182,8 @@ public class MisSeriesManagedBean implements Serializable {
             System.out.println("WAKI Soy menor que cero sorry xd serie");
 
         }
-        
-        // ...
 
+        // ...
     }
 
-    */
 }

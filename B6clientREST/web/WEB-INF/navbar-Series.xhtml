@@ -20,7 +20,10 @@ and open the template in the editor.
         <nav class="navbar navbar-dark bg-dark" >
             <a class="navbar-brand" style="color: #fff; font-family: 'Pacifico', cursive">Drawdede</a>
             <h:form class="form-inline">
+                <h:inputText p:class="form-control mr-sm-2" p:type="search" p:placeholder="Busca cualquier cómic" value="#{misSeriesManagedBean.busqueda}" />
+                <h:commandButton  class="btn btn-outline-light" type="submit" value="Search" action="#{misSeriesManagedBean.buscar()}" />
                 <h:commandButton action="#{misSeriesManagedBean.navegarSeies()}"  class="btn btn-outline-light" style="margin-left:10px" value="Mis Series"/>
+                <h:commandButton action="#{misEntregasManagedBean.navegarEntregas()}"  class="btn btn-outline-light" style="margin-left:10px" value="Mis Entregas"/>
             </h:form>
         </nav>
     </body>
