@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+        
+      <h:head>
+        <title>Crear Serie</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
+        <link rel="stylesheet" type="text/css" href="assets/css/styles.css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:include src="/WEB-INF/navbar-Series.xhtml"/>
+        <!--La serie tiene un id, titulo, categoria, descripcion y valoracion -->
+        
+        <h:form>
+            
+        <!--titulo -->
+        Titulo*: <h:inputText p:type="text" p:class="form-control" id="titulo" binding="#{titulo}" p:placeholder="introducir titulo" value="#{crearSerieManagedBean.titulo}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+            <f:validateLength minimum="0" maximum="255" />
+        </h:inputText> 
+        
+        <!-- categoria -->
+        Categoria*: <h:inputText p:type="text" p:class="form-control" id="categoria" binding="#{categoria}" p:placeholder="introducir categoria" value="#{crearSerieManagedBean.categoria}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+            <f:validateLength minimum="0" maximum="255" />
+        </h:inputText> 
+        
+        <!--descripcion -->
+        Descripcion: <h:inputText p:type="text" p:class="form-control" id="descripcion" binding="#{descripcion}" p:placeholder="introducir descripcion" value="#{crearSerieManagedBean.descripcion}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+            <f:validateLength minimum="0" maximum="255" />
+        </h:inputText> 
+        
+        <!--valoracion -->
+        
+        Valoracion: <h:selectOneMenu id="valoracion" value = "#{crearSerieManagedBean.valoracion}">
+            <f:selectItem noSelectionOption="true" itemValue = "vacio" itemLabel = "" /> 
+                        <f:selectItem itemValue = "1" itemLabel = "1" /> 
+                        <f:selectItem itemValue = "2" itemLabel = "2" /> 
+                        <f:selectItem itemValue = "3" itemLabel = "3" /> 
+                        <f:selectItem itemValue = "4" itemLabel = "4" /> 
+                        <f:selectItem itemValue = "5" itemLabel = "5" /> 
+                        <f:selectItem itemValue = "6" itemLabel = "6" /> 
+                        <f:selectItem itemValue = "7" itemLabel = "7" /> 
+                        <f:selectItem itemValue = "8" itemLabel = "8" /> 
+                        <f:selectItem itemValue = "9" itemLabel = "9" /> 
+                        <f:selectItem itemValue = "10" itemLabel = "10" /> 
+        </h:selectOneMenu>
+        
+        <div class="form-group edit-profile-form-group">
+               
+                    <button type="submit" class="btn btn-primary btn-raised" jsf:action="#{crearSerieManagedBean.crear()}">Aceptar</button>
+                    <a href="misSeries.jsf" class="btn btn-default btn-raised"/>
+                
+        </div>
+        
+        Los campos marcados con asterisco(*) son obligatorios. 
+        
+        </h:form>
+              
+    </h:body>
+</html>
+
