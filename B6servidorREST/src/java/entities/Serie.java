@@ -39,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Serie.findByValoracion", query = "SELECT s FROM Serie s WHERE s.valoracion = :valoracion")})
 public class Serie implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSerie")
+    private Collection<HasUsuario> hasUsuarioCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -148,6 +151,15 @@ public class Serie implements Serializable {
     @Override
     public String toString() {
         return "entities.Serie[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<HasUsuario> getHasUsuarioCollection() {
+        return hasUsuarioCollection;
+    }
+
+    public void setHasUsuarioCollection(Collection<HasUsuario> hasUsuarioCollection) {
+        this.hasUsuarioCollection = hasUsuarioCollection;
     }
     
 }

@@ -27,7 +27,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author Francis
+ * @author user
  */
 @Stateless
 @Path("entities.entrega")
@@ -144,4 +144,5 @@ public class EntregaFacadeREST extends AbstractFacade<Entrega> {
         return lista;
     }
 
+    
 }

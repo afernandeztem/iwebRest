@@ -10,11 +10,11 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 
 /**
- * Jersey REST client generated for REST resource:HasEntregaFacadeREST
- * [entities.hasentrega]<br>
+ * Jersey REST client generated for REST resource:UsuarioFacadeREST
+ * [entities.usuario]<br>
  * USAGE:
  * <pre>
- *        HasEntregaClient client = new HasEntregaClient();
+ *        UsuarioClient client = new UsuarioClient();
  *        Object response = client.XXX(...);
  *        // do whatever with response
  *        client.close();
@@ -22,15 +22,15 @@ import javax.ws.rs.client.WebTarget;
  *
  * @author user
  */
-public class HasEntregaClient {
+public class UsuarioClient {
 
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/B6servidorREST/webresources";
 
-    public HasEntregaClient() {
+    public UsuarioClient() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
-        webTarget = client.target(BASE_URI).path("entities.hasentrega");
+        webTarget = client.target(BASE_URI).path("entities.usuario");
     }
 
     public String countREST() throws ClientErrorException {
@@ -91,30 +91,6 @@ public class HasEntregaClient {
 
     public void remove(String id) throws ClientErrorException {
         webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{id})).request().delete();
-    }
-
-    public <T> T findEntregaConIdSerie_XML(Class<T> responseType, String serieId) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("serieId/{0}", new Object[]{serieId}));
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
-    }
-
-    public <T> T findEntregaConIdSerie_JSON(Class<T> responseType, String serieId) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("serieId/{0}", new Object[]{serieId}));
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
-    }
-
-    public <T> T findSerieConEntrega_XML(Class<T> responseType, String entregaId) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("entregaId/{0}", new Object[]{entregaId}));
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
-    }
-
-    public <T> T findSerieConEntrega_JSON(Class<T> responseType, String entregaId) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("entregaId/{0}", new Object[]{entregaId}));
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
     public void close() {

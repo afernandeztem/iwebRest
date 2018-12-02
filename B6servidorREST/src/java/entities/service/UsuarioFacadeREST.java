@@ -5,14 +5,11 @@
  */
 package entities.service;
 
-import entities.Entrega;
-import entities.HasEntrega;
-import entities.Serie;
+import entities.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,27 +25,27 @@ import javax.ws.rs.core.MediaType;
  * @author user
  */
 @Stateless
-@Path("entities.hasentrega")
-public class HasEntregaFacadeREST extends AbstractFacade<HasEntrega> {
+@Path("entities.usuario")
+public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
 
     @PersistenceContext(unitName = "B6servidorRESTPU")
     private EntityManager em;
 
-    public HasEntregaFacadeREST() {
-        super(HasEntrega.class);
+    public UsuarioFacadeREST() {
+        super(Usuario.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(HasEntrega entity) {
+    public void create(Usuario entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, HasEntrega entity) {
+    public void edit(@PathParam("id") Integer id, Usuario entity) {
         super.edit(entity);
     }
 
@@ -61,21 +58,21 @@ public class HasEntregaFacadeREST extends AbstractFacade<HasEntrega> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public HasEntrega find(@PathParam("id") Integer id) {
+    public Usuario find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<HasEntrega> findAll() {
+    public List<Usuario> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<HasEntrega> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Usuario> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 
@@ -89,31 +86,6 @@ public class HasEntregaFacadeREST extends AbstractFacade<HasEntrega> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
-    
-    
-    @GET
-    @Path("serieId/{serieId}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Entrega> findEntregaConIdSerie(@PathParam("serieId") Integer serieId) {
-        Query q;
-        q = this.em.createQuery("SELECT h.idEntrega FROM HasEntrega h  WHERE h.idSerie.id = :clave");
-        q.setParameter("clave", serieId);
-        List<Entrega> entregas = (List) q.getResultList();
-        return entregas;
-    }
-    
-    @GET
-    @Path("entregaId/{entregaId}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Serie findSerieConEntrega(@PathParam("entregaId") Integer entregaId) {
-       Query q;
-        q = this.em.createQuery("SELECT h.idSerie FROM HasEntrega h  WHERE h.idEntrega.id = :clave");
-        
-        
-        q.setParameter("clave", entregaId);
-        Serie serie = (Serie) q.getSingleResult();
-        return serie;
     }
     
 }

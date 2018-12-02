@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Drawdede</title>
+        <link rel="stylesheet" type="text/css" href="assets/css/styles.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"/>
+
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="google-signin-client_id" content="626868915968-rsf0b1aa5s0d2au8055kbnmft0amc9ra.apps.googleusercontent.com"></meta>
+        <script>
+            function onSignIn(googleUser) {
+                var profile = googleUser.getBasicProfile();
+                console.log('ID: ' + profile.getId() + 'Do not send to your backend! Use an ID token instead.');
+                console.log('Name: ' + profile.getName());
+                console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+                var id_token = googleUser.getAuthResponse().id_token;
+                console.log('ID token: ' + id_token);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/welcome/token');
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    console.log('Signed in as: ' + xhr.responseText);
+                };
+                xhr.send('idtoken=' + id_token);
+
+            }
+            function signOut() {
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                    console.log('User signed out.');
+                });
+            }
+        </script>
+        <script src="https://apis.google.com/js/platform.js"></script>
+
+
+
+    </h:head>
+    <h:body style="background-image: url(assets/drawable/fondo4.png); height: 100%; 
+            background-repeat: no-repeat;
+            background-size: cover" >
+        <!--<ui:include src="/WEB-INF/navbar-Series.xhtml"/>-->
+        <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 50px">Bienvenido a Drawdede <br/> ¡Inicia sesión para disfrutar del contenido!</h1>
+
+        <!-- <body>-->
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="#" onclick="signOut();">Sign out</a>
+        <!--</body>-->
+    </h:body>
+</html>

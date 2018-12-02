@@ -23,7 +23,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author Francis
+ * @author user
  */
 @Stateless
 @Path("entities.serie")
@@ -62,7 +62,7 @@ public class SerieFacadeREST extends AbstractFacade<Serie> {
     public Serie find(@PathParam("id") Integer id) {
         return super.find(id);
     }
-    
+
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -137,6 +137,4 @@ public class SerieFacadeREST extends AbstractFacade<Serie> {
     }
     
     
-    
-
 }
