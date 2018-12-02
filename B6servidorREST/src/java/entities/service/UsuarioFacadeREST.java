@@ -98,9 +98,14 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         Query q;
         q = this.em.createQuery("SELECT u FROM Usuario u WHERE UPPER(u.email) = UPPER(:clave)");
         q.setParameter("clave", email);
+        
+        if (q.getResultList().size() > 0) {
         Usuario result = (Usuario) q.getResultList().get(0);
         
-        return result;
+            return result;
+        } else {
+            return null;
+        }
     }
     
     
@@ -108,23 +113,25 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Path("/welcome")
     @Produces(MediaType.TEXT_PLAIN)
     public String login(UsuarioProxy proxy) {
-        System.out.println("llego a login");
+     
         Usuario u = this.findConEmail(proxy.email);
         if (u!=null) {
             //actualizo la información del usuario existente
-            System.out.println("Llego al if null");
+           
             u.setNombre(proxy.name);
             u.setUrlFoto(proxy.imageUrl);
             u.setEmail(proxy.email);
             this.edit(u);
                         
         } else {
-            System.out.println("Llego al else, es null");
+           
            Usuario nuevo = new Usuario ();
-           nuevo.setId(proxy.id);
+           //No podemos setear la id. La id se autogenera
+           //nuevo.setId(proxy.id);
            nuevo.setNombre(proxy.name);
            nuevo.setUrlFoto(proxy.imageUrl);
            nuevo.setEmail(proxy.email);
+        
            this.create(nuevo);
         }
         

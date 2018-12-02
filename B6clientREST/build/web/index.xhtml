@@ -7,11 +7,37 @@
         <title>Drawdede</title>
         <link rel="stylesheet" type="text/css" href="assets/css/styles.css"/>
         <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"/>
+
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="google-signin-client_id" content="626868915968-rsf0b1aa5s0d2au8055kbnmft0amc9ra.apps.googleusercontent.com"></meta>
+
+        <script>
+            function signOut() {
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                    console.log('User signed out.');
+
+                });
+                window.location.replace("http://localhost:8080/B6clientREST/welcome.jsf");
+            }
+
+            function onLoad() {
+                gapi.load('auth2', function () {
+                    gapi.auth2.init();
+                });
+            }
+
+        </script>
     </h:head>
     <h:body style="background-image: url(assets/drawable/fondo4.png); height: 100%; 
             background-repeat: no-repeat;
             background-size: cover" >
-            <ui:include src="/WEB-INF/navbar-Series.xhtml"/>
-            <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 50px">Bienvenido a Drawdede <br/> tu gestor de Cómics</h1>
+        <ui:include src="/WEB-INF/navbar-Series.xhtml"/>
+        <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 50px">Bienvenido a Drawdede <br/> tu gestor de Cómics</h1>
+        
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="#" onclick="signOut();">Sign out</a>
+        <script src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
     </h:body>
 </html>
