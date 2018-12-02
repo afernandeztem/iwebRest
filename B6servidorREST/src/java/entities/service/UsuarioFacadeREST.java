@@ -6,10 +6,12 @@
 package entities.service;
 
 import entities.Usuario;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -87,5 +89,88 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     protected EntityManager getEntityManager() {
         return em;
     }
+
+    @GET
+    @Path("usuarioPorEmail/{email}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Usuario findConEmail(@PathParam("email") String email) {
+        
+        Query q;
+        q = this.em.createQuery("SELECT u FROM Usuario u WHERE UPPER(u.email) = UPPER(:clave)");
+        q.setParameter("clave", email);
+        Usuario result = (Usuario) q.getResultList().get(0);
+        
+        return result;
+    }
     
+    
+    @POST
+    @Path("/welcome")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String login(UsuarioProxy proxy) {
+        System.out.println("llego a login");
+        Usuario u = this.findConEmail(proxy.email);
+        if (u!=null) {
+            //actualizo la información del usuario existente
+            System.out.println("Llego al if null");
+            u.setNombre(proxy.name);
+            u.setUrlFoto(proxy.imageUrl);
+            u.setEmail(proxy.email);
+            this.edit(u);
+                        
+        } else {
+            System.out.println("Llego al else, es null");
+           Usuario nuevo = new Usuario ();
+           nuevo.setId(proxy.id);
+           nuevo.setNombre(proxy.name);
+           nuevo.setUrlFoto(proxy.imageUrl);
+           nuevo.setEmail(proxy.email);
+           this.create(nuevo);
+        }
+        
+        return "ok";
+    }
+    
+    public static class UsuarioProxy implements Serializable {
+        public int id;
+        public String name;
+        public String imageUrl;
+        public String email;
+        
+       public UsuarioProxy (int id, String name, String imageUrl, String email){
+           this.id = id;
+           this.name = name;
+           this.imageUrl = imageUrl;
+           this.email = email;
+       }
+       public UsuarioProxy () {
+           // Nada, ha habido alguna cosa rara al pasar los parámetros.
+       }
+        
+       UsuarioProxy (Usuario u) {
+           this.id = u.getId();
+           this.name = u.getNombre();
+           this.imageUrl = u.getUrlFoto();
+           this.email = u.getEmail();
+       } 
+        
+    }
+    
+    
+    /*
+    @POST
+    @Path("/preferencias")
+    @Produces({ MediaType.APPLICATION_JSON })
+    public List<CategoriaProxy> nuevaPreferenciaUsuario(CategoriaProxy categoria, @HeaderParam("bearer") String token) throws NotAuthenticatedException, AgendamlgNotFoundException {
+        String idUsuario = TokensUtils.getUserIdFromJwtTokenOrThrow(TokensUtils.decodeJwtToken(token));
+        Usuario usuario = usuarioFacade.find(idUsuario);
+        categoriaFacade.afegirPreferenciaUsuari(usuario, categoria.id);
+        return categoriaFacade.buscarPreferenciasUsuario(usuario).stream().map(CategoriaProxy::new).collect(Collectors.toList());
+    }
+    */
+    /*id: profile.getId(),
+      name: profile.getName(),
+      imageUrl: profile.getImageUrl(),
+      email: profile.getEmail(),
+      token: googleUser.getAuthResponse().id_token,*/
 }
