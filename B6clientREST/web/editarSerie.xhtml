@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <f:metadata>
+        <f:viewParam name="id" value="#{editarSerieManagedBean.id}"/>
+        <f:event type="preRenderView" listener="#{misSeriesManagedBean.onParameterReceived()}" />
+    </f:metadata>    
+
+
+    <h:head>
+        <title>Editar Serie</title>
+
+    </h:head>
+    <h:body>
+        <ui:include src="/WEB-INF/navbar-Series.xhtml"/>
+        <!--La serie tiene un id, titulo, categoria, descripcion y valoracion -->
+        <div style="padding: 20px">
+            <h1> Serie "#{editarSerieManagedBean.id}" </h1>
+
+            <h:form>
+
+                <!--titulo -->
+                Titulo*: <h:inputText p:type="text" p:class="btn btn-outline-dark" id="titulo" binding="#{titulo}" p:placeholder="#{editarSerieManagedBean.titulo}" value="#{editarSerieManagedBean.titulo}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+                    <f:validateLength minimum="0" maximum="255" />
+                </h:inputText> 
+
+                <!-- categoria -->
+                Categoria*: <h:inputText p:type="text" p:class="btn btn-outline-dark" id="categoria" binding="#{categoria}" p:placeholder="#{editarSerieManagedBean.categoria}" value="#{editarSerieManagedBean.categoria}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+                    <f:validateLength minimum="0" maximum="255" />
+                </h:inputText> 
+
+                <!--descripcion -->
+                Descripcion: <h:inputText p:type="text" p:class="btn btn-outline-dark" id="descripcion" binding="#{descripcion}" p:placeholder="#{editarSerieManagedBean.descripcion}" value="#{editarSerieManagedBean.descripcion}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+                    <f:validateLength minimum="0" maximum="255" />
+                </h:inputText> 
+
+                <!--valoracion -->
+
+                Valoracion: <h:selectOneMenu id="valoracion" value = "#{editarSerieManagedBean.valoracion}">
+                    <f:selectItem noSelectionOption="true" itemValue = "vacio" itemLabel = "" /> 
+                    <f:selectItem itemValue = "1" itemLabel = "1" /> 
+                    <f:selectItem itemValue = "2" itemLabel = "2" /> 
+                    <f:selectItem itemValue = "3" itemLabel = "3" /> 
+                    <f:selectItem itemValue = "4" itemLabel = "4" /> 
+                    <f:selectItem itemValue = "5" itemLabel = "5" /> 
+                    <f:selectItem itemValue = "6" itemLabel = "6" /> 
+                    <f:selectItem itemValue = "7" itemLabel = "7" /> 
+                    <f:selectItem itemValue = "8" itemLabel = "8" /> 
+                    <f:selectItem itemValue = "9" itemLabel = "9" /> 
+                    <f:selectItem itemValue = "10" itemLabel = "10" /> 
+                </h:selectOneMenu>
+
+                <div class="form-group edit-profile-form-group">
+
+                    <h:commandButton style="margin-top: 20px" value="Guardar cambios" type="submit" class="btn btn-outline-dark" action="#{editarSerieManagedBean.editar()}" onclick="return alert('Serie editada correctamente');"/>
+                    <!--<h:commandButton value="Guardar cambios" type="submit" class="btn btn-primary btn-raised" action="# {editarSerieManagedBean.editar()}" onclick="return alert('Serie editada correctamente');"></h:commandButton>-->
+
+                </div>
+
+            </h:form>
+        </div>
+    </h:body>
+</html>
+
+

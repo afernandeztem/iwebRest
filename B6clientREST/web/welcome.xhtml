@@ -30,7 +30,7 @@
                  xhr.send('idtoken=' + id_token);*/
 
 
-                fetch('/B6servidorREST/webresources/entities.usuario/welcome', {
+                fetch('/B6clientREST/webresources/entities.usuario/welcome', {
                     method: 'POST',
                     credentials: 'same-origin',
                     headers: {
@@ -46,6 +46,7 @@
                 }).then(res => res.text()).then((datos) => {
                     //console.log("Hola llego aqui");
                     //Hacer cosas con la respuesta del servidor
+                    //document.getElementById('token').value = googleUser.getAuthResponse().id_token;
                     window.location.replace("http://localhost:8080/B6clientREST/index.jsf");
                 });
 
@@ -91,6 +92,7 @@
                     window.location.replace("http://localhost:8080/B6clientREST/welcome.jsf");
                 });
             }
+            
         </script>
         <script src="https://apis.google.com/js/platform.js"></script>
 
@@ -101,8 +103,9 @@
             background-repeat: no-repeat;
             background-size: cover" >
         <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 50px"> Bienvenido a Drawdede <br/> ¡Inicia sesión para disfrutar del contenido! </h1>
-
-
+        <!--<h:form>
+        <h:inputHidden id="token" value="# {sessionManagedBean.token}" />
+        </h:form>-->
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
         <a href="#" onclick="signOut();">Sign out</a>
  

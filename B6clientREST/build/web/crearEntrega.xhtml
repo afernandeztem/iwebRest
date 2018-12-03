@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <h:head>
+        <title>Crear Entrega</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
+        <link rel="stylesheet" type="text/css" href="assets/css/styles.css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+
+    <h:body>
+        <ui:include src="/WEB-INF/navbar-Series.xhtml"/>
+        <!--Las Entregas tienen un id, anotacion y fecha de entrega -->
+        <div style="padding: 20px">
+
+
+            <!--Serie-->
+            <br/>
+            Lista de Series con id:
+            <br/>
+            <!--<h:selectOneMenu value="#{crearEntregaManagedBean.serieId}" >
+                <f:selectItems value="#{crearEntregaManagedBean.series}" var="s" itemValue="#{s.titulo}" itemLabel="#{s.titulo}" />
+            </h:selectOneMenu> -->
+            <br/>
+            <ui:repeat  value="#{crearEntregaManagedBean.series}" var="serie" rendered="#{!(misSeriesManagedBean.series.size() == 0)}">
+
+                <div class="card">
+                    <div class="card-header" >
+                        <h6 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse"  aria-expanded="true" >
+                                #{serie.id}.-#{serie.titulo}
+                            </button>
+                        </h6>
+                    </div>
+
+                    <div  class="collapse show" data-parent="#accordion">
+                        <div class="card-body">
+                            <strong>Categoría:</strong> #{serie.categoria}
+                            <strong>Descripción:</strong> #{serie.descripcion}
+                            <strong>Valoración:</strong> #{serie.valoracion}
+                        </div>
+                    </div>
+                </div>
+
+            </ui:repeat>
+
+            <br/>
+            <h:form>
+
+                Seleccionar id Serie*: <h:inputText p:type="text" p:class="form-control" id="serieId" binding="#{serieId}" p:placeholder="introducir id serie" value="#{crearEntregaManagedBean.serieId}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+                    <f:validateLength minimum="0" maximum="255" />
+                </h:inputText> 
+
+                <br/>
+                <!--anotacion -->
+                Anotacion: <h:inputText p:type="text" p:class="form-control" id="anotacion" binding="#{anotacion}" p:placeholder="introducir anotacion" value="#{crearEntregaManagedBean.anotacion}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+                    <f:validateLength minimum="0" maximum="255" />
+                </h:inputText> 
+                <br/>
+                <!-- fecha de entrega -->
+                Fecha de entrega: <h:inputText p:type="date" p:class="form-control" id="fecha_entrega" binding="#{fecha_entrega}" p:placeholder="Fecha de entrega" value="#{crearEntregaManagedBean.fecha_entrega}">
+                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                </h:inputText>
+
+                <br/>
+
+                <div class="form-group edit-profile-form-group">
+
+                    <button type="submit" class="btn btn-primary btn-raised" jsf:action="#{crearEntregaManagedBean.crear()}">Aceptar</button>
+
+
+                </div>
+
+                Los campos marcados con asterisco(*) son obligatorios. 
+
+
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

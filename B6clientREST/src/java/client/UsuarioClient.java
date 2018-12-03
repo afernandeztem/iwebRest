@@ -5,9 +5,12 @@
  */
 package client;
 
+import javax.inject.Inject;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
+import managed.SessionManagedBean;
+
 
 /**
  * Jersey REST client generated for REST resource:UsuarioFacadeREST
@@ -26,7 +29,9 @@ public class UsuarioClient {
 
     private WebTarget webTarget;
     private Client client;
-    private static final String BASE_URI = "http://localhost:8080/B6servidorREST/webresources";
+    private static final String BASE_URI = "http://localhost:8080/B6clientREST/webresources";
+    
+    @Inject private SessionManagedBean sb;
 
     public UsuarioClient() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
