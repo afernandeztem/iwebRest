@@ -32,8 +32,12 @@ and open the template in the editor.
 
         <div align="center" style="margin-top: 20px">
             <h:form>
-                <h:inputText p:class="btn btn-outline-dark" p:type="search" p:placeholder="Fecha inicio(YYYY-MM-DD)" value="#{misEntregasManagedBean.t1}" />
-                <h:inputText p:class="btn btn-outline-dark" p:type="search" p:placeholder="Fecha fin (YYYY-MM-DD)" value="#{misEntregasManagedBean.t2}" />
+                <h:inputText p:class="btn btn-outline-dark" p:type="date" p:placeholder="Fecha inicio(YYYY-MM-DD)" value="#{misEntregasManagedBean.t1}" >
+                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                </h:inputText>
+                <h:inputText p:class="btn btn-outline-dark" p:type="date" p:placeholder="Fecha fin (YYYY-MM-DD)" value="#{misEntregasManagedBean.t2}" >
+                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                </h:inputText>
                 <h:commandButton class="btn btn-outline-dark" type="submit" value="Filtrar por fecha" action="#{misEntregasManagedBean.filtrarPorPeriodoDeTiempo()}" />
             </h:form>
         </div>
@@ -43,7 +47,7 @@ and open the template in the editor.
                     <div class="card-body">
                         <h1 style="text-align: center">#{entrega.anotacion}</h1>
                         <hr/>   
-                        <h3>Fecha Entrega: #{entrega.fechaEntrega.year}-#{entrega.fechaEntrega.month}-#{entrega.fechaEntrega.day}</h3>
+                        <h3>Fecha Entrega: #{misEntregasManagedBean.cambiarFormato(entrega.fechaEntrega)}</h3>
                         <h3>Id: #{entrega.id}</h3>
                         <h3>Serie: #{misEntregasManagedBean.getSerieconEntrega(entrega)}</h3>
                         <div style="margin-top: 20px; margin-bottom: 10px; position: absolute; left: 0px; bottom: 0px; margin-left: 20px">

@@ -32,7 +32,7 @@
                 </h:inputText> 
                 <br/>
                 <!-- fechaEntrega -->
-                FechaEntrega*: <h:inputText p:type="text" p:class="form-control" id="categoria" binding="#{categoria}" p:placeholder="#{editarEntregaManagedBean.fecha_entrega}" value="#{editarEntregaManagedBean.fecha_entrega}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+                FechaEntrega*: <h:inputText p:type="date" p:class="form-control" id="categoria" binding="#{categoria}" p:placeholder="#{editarEntregaManagedBean.fecha_entrega}" value="#{editarEntregaManagedBean.fecha_entrega}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                     <f:convertDateTime pattern="yyyy-MM-dd"/>  
                 </h:inputText> 

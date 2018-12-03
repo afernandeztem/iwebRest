@@ -12,7 +12,10 @@ import javax.enterprise.context.RequestScoped;
 import client.EntregaClient;
 import client.HasEntregaClient;
 import entity.Serie;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
@@ -22,7 +25,7 @@ public class MisEntregasManagedBean {
 
     private List<Entrega> entregas;
     private String busqueda;
-    private String t1, t2;
+    private Date t1, t2;
     private List<Entrega> resultadoBusqueda = null;
     private Integer refresh = 0;
     private int eliminate = 0;
@@ -83,15 +86,20 @@ public class MisEntregasManagedBean {
 
     public String filtrarPorPeriodoDeTiempo() {
         EntregaClient client = new EntregaClient();
-        Response r = client.filtrarPorTiempo_XML(Response.class, this.t1, this.t2);
-        if (r.getStatus() == 200) {
+        
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String tiempo1 = dateFormat.format(t1);
+            String tiempo2 = dateFormat.format(t2);
+        Response rTiempo = client.filtrarPorTiempo_XML(Response.class, tiempo1, tiempo2);
+        if (rTiempo.getStatus() == 200) {
             GenericType<List<Entrega>> genericType = new GenericType<List<Entrega>>() {
             };
-            List<Entrega> allEntregas = r.readEntity(genericType);
+            List<Entrega> allEntregas = rTiempo.readEntity(genericType);
             this.entregas = allEntregas;
         } else {
             this.entregas = new ArrayList<Entrega>();
         }
+         
         return "misEntregas";
     }
 
@@ -107,19 +115,19 @@ public class MisEntregasManagedBean {
         this.entregas = entregas;
     }
 
-    public String getT1() {
+    public Date getT1() {
         return t1;
     }
 
-    public void setT1(String t1) {
+    public void setT1(Date t1) {
         this.t1 = t1;
     }
 
-    public String getT2() {
+    public Date getT2() {
         return t2;
     }
 
-    public void setT2(String t2) {
+    public void setT2(Date t2) {
         this.t2 = t2;
     }
 
@@ -166,6 +174,14 @@ public class MisEntregasManagedBean {
             }
         }
 
+    }
+    
+    public String cambiarFormato(Date date){
+        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String d = dateFormat.format(date);
+        
+        return d;
     }
 
 }
