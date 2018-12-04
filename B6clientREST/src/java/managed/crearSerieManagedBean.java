@@ -9,6 +9,7 @@ import client.SerieClient;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import entity.Serie;
+import utils.QueryUtils;
 /**
  *
  * @author Francis
@@ -92,6 +93,8 @@ public class crearSerieManagedBean {
         }else{
             serie.setValoracion(Integer.parseInt(valoracion));
         }
+        
+        serie.setImagen(QueryUtils.fetchImagenId(titulo));
         
         serieCliente = new SerieClient();
         serieCliente.create_XML(serie);

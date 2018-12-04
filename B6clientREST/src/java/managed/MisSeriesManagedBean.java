@@ -18,6 +18,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import javax.xml.ws.WebServiceRef;
+import utils.QueryUtils;
 
 /**
  *
@@ -32,6 +33,8 @@ public class MisSeriesManagedBean implements Serializable {
     private List<Serie> resultadoBusqueda = null;
     private Integer refresh = 0;
     private int eliminate = 0;
+
+    
 
     public int getEliminate() {
         return eliminate;
