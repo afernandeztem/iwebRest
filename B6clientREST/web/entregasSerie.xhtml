@@ -17,6 +17,10 @@
     </h:head>
     <h:body>
         <ui:include src="/WEB-INF/navbar-Entregas.xhtml"/>
+        
+        <ui:fragment rendered="#{(entregaSerieManagedBean.entregas.size() == 0)}">
+            Esta serie no tiene entregas :(
+        </ui:fragment>
 
         <div class="card-columns" style="padding: 10px">
             <ui:repeat  value="#{entregaSerieManagedBean.entregas}" var="entrega" rendered="#{!(entregaSerieManagedBean.entregas.size() == 0)}">

@@ -57,7 +57,6 @@ public class entregaSerieManagedBean {
         this.hasEntregaClient= new HasEntregaClient();
         
        
-        
         Response r= this.hasEntregaClient.findEntregaConIdSerie_XML(Response.class, Integer.toString(idSerie));
        
        if (r.getStatus() == 200) {
@@ -68,6 +67,7 @@ public class entregaSerieManagedBean {
         } else {
             this.entregas = new ArrayList<Entrega>();
         }
+       
     }
     
     public String cambiarFormato(Date date){
