@@ -8,7 +8,7 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf">
     <f:metadata>
         <f:viewParam name="id" value="#{editarSerieManagedBean.id}"/>
-        <f:event type="preRenderView" listener="#{misSeriesManagedBean.onParameterReceived()}" />
+        <f:event type="preRenderView" listener="#{editarSerieManagedBean.onParameterReceived()}" />
     </f:metadata>    
 
 
@@ -28,17 +28,17 @@
                 Titulo*: <h:inputText p:type="text" p:class="btn btn-outline-dark" id="titulo" binding="#{titulo}" p:placeholder="#{editarSerieManagedBean.titulo}" value="#{editarSerieManagedBean.titulo}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                 </h:inputText> 
-
+                
                 <!-- categoria -->
                 Categoria*: <h:inputText p:type="text" p:class="btn btn-outline-dark" id="categoria" binding="#{categoria}" p:placeholder="#{editarSerieManagedBean.categoria}" value="#{editarSerieManagedBean.categoria}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                 </h:inputText> 
-
+                
                 <!--descripcion -->
                 Descripcion: <h:inputText p:type="text" p:class="btn btn-outline-dark" id="descripcion" binding="#{descripcion}" p:placeholder="#{editarSerieManagedBean.descripcion}" value="#{editarSerieManagedBean.descripcion}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                 </h:inputText> 
-
+                
                 <!--valoracion -->
 
                 Valoracion: <h:selectOneMenu id="valoracion" value = "#{editarSerieManagedBean.valoracion}">
@@ -54,7 +54,7 @@
                     <f:selectItem itemValue = "9" itemLabel = "9" /> 
                     <f:selectItem itemValue = "10" itemLabel = "10" /> 
                 </h:selectOneMenu>
-
+                <br/>
                 <div class="form-group edit-profile-form-group">
 
                     <h:commandButton style="margin-top: 20px" value="Guardar cambios" type="submit" class="btn btn-outline-dark" action="#{editarSerieManagedBean.editar()}" onclick="return alert('Serie editada correctamente');"/>

@@ -26,21 +26,21 @@
             <h:form>
 
                 <!--anotación -->
-                <p>Anotación*:</p>
-                <h:inputText p:type="text" p:class="form-control" id="titulo" binding="#{titulo}" p:placeholder="#{editarEntregaManagedBean.anotacion}" value="#{editarEntregaManagedBean.anotacion}" validatorMessage="La lontigud de la anotación no puede superar los 255 caracteres" >
+                Anotación*:
+                <h:inputText p:type="text" p:class="btn btn-outline-dark" id="titulo" binding="#{titulo}" p:placeholder="#{editarEntregaManagedBean.anotacion}" value="#{editarEntregaManagedBean.anotacion}" validatorMessage="La lontigud de la anotación no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                 </h:inputText> 
-                <br/>
+                
                 <!-- fechaEntrega -->
-                FechaEntrega*: <h:inputText p:type="date" p:class="form-control" id="categoria" binding="#{categoria}" p:placeholder="#{editarEntregaManagedBean.fecha_entrega}" value="#{editarEntregaManagedBean.fecha_entrega}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+                FechaEntrega*: <h:inputText p:type="date" p:class="btn btn-outline-dark" id="categoria" binding="#{categoria}" p:placeholder="#{editarEntregaManagedBean.fecha_entrega}" value="#{editarEntregaManagedBean.fecha_entrega}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                     <f:convertDateTime pattern="yyyy-MM-dd"/>  
                 </h:inputText> 
-                <br/>
+                
 
                 <div class="form-group edit-profile-form-group">
 
-                    <h:commandButton value="Guardar cambios" type="submit" class="btn btn-primary btn-raised" action="#{editarEntregaManagedBean.editar()}" onclick="return alert('Entrega editada correctamente');"></h:commandButton>
+                    <h:commandButton value="Guardar cambios"  style="margin-top: 20px" type="submit" class="btn btn-outline-dark" action="#{editarEntregaManagedBean.editar()}" onclick="return alert('Entrega editada correctamente');"></h:commandButton>
                     <!--<h:commandButton value="Guardar cambios" type="submit" class="btn btn-primary btn-raised" action="# {editarSerieManagedBean.editar()}" onclick="return alert('Serie editada correctamente');"></h:commandButton>-->
 
                 </div>

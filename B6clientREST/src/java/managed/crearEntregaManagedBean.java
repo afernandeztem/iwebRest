@@ -191,7 +191,7 @@ public class crearEntregaManagedBean {
         this.hasEntregaClient.create_XML(hasEntrega);
        
        
-        return "index?faces-redirect=true";
+        return "misEntregas?refresh=1&faces-redirect=true";
             
     }
     

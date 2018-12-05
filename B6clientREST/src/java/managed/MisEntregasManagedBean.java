@@ -173,13 +173,21 @@ public class MisEntregasManagedBean {
                 this.eliminate = 0;
             }
         }
+        
+        if (this.refresh == 1) {
+            obtenerEntregas();
+            // this.refresh = false;
+        }
 
     }
     
     public String cambiarFormato(Date date){
         
+        String d=null;
+        if(date!=null){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String d = dateFormat.format(date);
+        d = dateFormat.format(date);
+        }
         
         return d;
     }
