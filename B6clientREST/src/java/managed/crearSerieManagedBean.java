@@ -9,7 +9,8 @@ import client.SerieClient;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import entity.Serie;
-import utils.QueryUtils;
+import utils.QueryUtilsUnsplash;
+
 /**
  *
  * @author Francis
@@ -23,15 +24,24 @@ public class crearSerieManagedBean {
      */
     public crearSerieManagedBean() {
     }
-    
+
     private Serie serie;
     private SerieClient serieCliente;
-    
+
     private int id;
     private String titulo;
     private String categoria;
     private String descripcion;
     private String valoracion;
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -40,7 +50,6 @@ public class crearSerieManagedBean {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-   
 
     public int getId() {
         return id;
@@ -73,32 +82,35 @@ public class crearSerieManagedBean {
     public void setValoracion(String valoracion) {
         this.valoracion = valoracion;
     }
-    
-    public String crear(){
-        
-        
-        serie= new Serie();
-        
+
+    public String crear() {
+
+        serie = new Serie();
+
         serie.setTitulo(titulo);
         serie.setCategoria(categoria);
-        
-        if(descripcion.equals("")){
+
+        if (descripcion.equals("")) {
             serie.setDescripcion(null);
-        }else{
+        } else {
             serie.setDescripcion(descripcion);
         }
-        
-        if(valoracion.equals("vacio")){
+
+        if (valoracion.equals("vacio")) {
             serie.setValoracion(null);
-        }else{
+        } else {
             serie.setValoracion(Integer.parseInt(valoracion));
         }
-        
-        serie.setImagen(QueryUtils.fetchImagenId(titulo));
-        
+
+        if (!url.equals("")) {
+            serie.setImagen(url);
+        } else {
+            serie.setImagen(QueryUtilsUnsplash.fetchImagenId(titulo));
+        }
+
         serieCliente = new SerieClient();
         serieCliente.create_XML(serie);
-        
+
         return "index?faces-redirect=true";
     }
 }

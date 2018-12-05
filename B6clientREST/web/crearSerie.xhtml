@@ -35,6 +35,11 @@
             <f:validateLength minimum="0" maximum="255" />
         </h:inputText> 
         
+        <!--descripcion -->
+        URL imagen (si se deja vacío este campo se escogerá una imagen al azar de Unsplash):
+        <h:inputText p:type="text" p:class="form-control" p:placeholder="introducir url" value="#{crearSerieManagedBean.url}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+        </h:inputText> 
+        
         <!--valoracion -->
         
         Valoracion: <h:selectOneMenu id="valoracion" value = "#{crearSerieManagedBean.valoracion}">
@@ -55,6 +60,8 @@
                
                     <button type="submit" class="btn btn-primary btn-raised" jsf:action="#{crearSerieManagedBean.crear()}">Aceptar</button>
                     <a href="misSeries.jsf" class="btn btn-default btn-raised"/>
+                    
+          
                 
         </div>
         

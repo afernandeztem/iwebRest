@@ -18,7 +18,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import javax.xml.ws.WebServiceRef;
-import utils.QueryUtils;
+import utils.QueryUtilsUnsplash;
 
 /**
  *
