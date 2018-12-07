@@ -25,10 +25,38 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
         <link rel="stylesheet" type="text/css" href="assets/css/styles.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+        <meta name="google-signin-client_id" content="626868915968-rsf0b1aa5s0d2au8055kbnmft0amc9ra.apps.googleusercontent.com"></meta>
+        <script>
+            function signOut() {
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                    console.log('User signed out.');
+                });
+                sessionStorage.setItem("emailSession", "-1");
+                sessionStorage.setItem("tokenSession", "-1");
+                window.location.replace("http://localhost:8080/B6clientREST/welcome.jsf");
+            }
+
+            function onLoad() {
+                gapi.load('auth2', function () {
+                    gapi.auth2.init();
+                });
+                var email = sessionStorage.getItem("emailSession");
+                console.log(email);
+                if (email == null || email == "-1") {
+                    //¿Alerta?
+                    window.location.replace("http://localhost:8080/B6clientREST/welcome.jsf");
+                } 
+            }
+        </script>
     </h:head>
     <h:body style="background-color: #F9F9FA">
 
         <ui:include src="/WEB-INF/navbar-Entregas.xhtml"/>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="#" onclick="signOut();">Sign out</a>
+        <script src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
 
         <div align="center" style="margin-top: 20px">
             <h:form>
@@ -65,7 +93,7 @@ and open the template in the editor.
                 <h:commandLink class="plus" action="#{crearEntregaManagedBean.navegarCrearEntrega()}" value="+" />
             </div>
         </h:form>
-
+        
     </h:body>
 </html>
 

@@ -13,12 +13,39 @@
 
 
     <h:head>
+        <meta name="google-signin-client_id" content="626868915968-rsf0b1aa5s0d2au8055kbnmft0amc9ra.apps.googleusercontent.com"></meta>
+        <script>
+            function signOut() {
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                    console.log('User signed out.');
+                });
+                sessionStorage.setItem("emailSession", "-1");
+                sessionStorage.setItem("tokenSession", "-1");
+                window.location.replace("http://localhost:8080/B6clientREST/welcome.jsf");
+            }
+
+            function onLoad() {
+                gapi.load('auth2', function () {
+                    gapi.auth2.init();
+                });
+                var email = sessionStorage.getItem("emailSession");
+                console.log(email);
+                if (email == null || email == "-1") {
+                    //¿Alerta?
+                    window.location.replace("http://localhost:8080/B6clientREST/welcome.jsf");
+                }
+            }
+        </script>
         <title>Editar Serie</title>
 
     </h:head>
     <h:body>
         <ui:include src="/WEB-INF/navbar-Series.xhtml"/>
         <!--La serie tiene un id, titulo, categoria, descripcion y valoracion -->
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="#" onclick="signOut();">Sign out</a>
+        <script src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
 
         <h1> Entrega "#{editarEntregaManagedBean.id}" </h1>
 
@@ -30,13 +57,13 @@
                 <h:inputText p:type="text" p:class="btn btn-outline-dark" id="titulo" binding="#{titulo}" p:placeholder="#{editarEntregaManagedBean.anotacion}" value="#{editarEntregaManagedBean.anotacion}" validatorMessage="La lontigud de la anotación no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                 </h:inputText> 
-                
+
                 <!-- fechaEntrega -->
                 FechaEntrega*: <h:inputText p:type="date" p:class="btn btn-outline-dark" id="categoria" binding="#{categoria}" p:placeholder="#{editarEntregaManagedBean.fecha_entrega}" value="#{editarEntregaManagedBean.fecha_entrega}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                     <f:convertDateTime pattern="yyyy-MM-dd"/>  
                 </h:inputText> 
-                
+
 
                 <div class="form-group edit-profile-form-group">
 

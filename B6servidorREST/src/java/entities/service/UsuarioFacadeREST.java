@@ -9,6 +9,7 @@ import entities.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -24,6 +25,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import session.SessionBean;
 
 /**
  *
@@ -36,7 +38,8 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @PersistenceContext(unitName = "B6servidorRESTPU")
     private EntityManager em;
     
-    
+    @Inject
+    private SessionBean smb;
 
     public UsuarioFacadeREST() {
         super(Usuario.class);
@@ -117,8 +120,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Path("/welcome")
     @Produces(MediaType.TEXT_PLAIN)
     public String login(UsuarioProxy proxy, @Context HttpServletRequest req) {
-        HttpSession session= req.getSession(true);
-
+       
         Usuario u = this.findConEmail(proxy.email);
         if (u != null) {
             //actualizo la información del usuario existente
@@ -151,14 +153,14 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         public String name;
         public String imageUrl;
         public String email;
-        public String token;
+
 
         public UsuarioProxy(int id, String name, String imageUrl, String email, String token) {
             this.id = id;
             this.name = name;
             this.imageUrl = imageUrl;
             this.email = email;
-            this.token = token;
+            
         }
 
         public UsuarioProxy() {
@@ -170,7 +172,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
             this.name = u.getNombre();
             this.imageUrl = u.getUrlFoto();
             this.email = u.getEmail();
-            this.token = token;
+           
         }
 
     }
@@ -191,4 +193,101 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
       imageUrl: profile.getImageUrl(),
       email: profile.getEmail(),
       token: googleUser.getAuthResponse().id_token,*/
+
+ // /loadseries
+    @POST
+    @Path("/loadseries")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String loadSeries(ProxySession proxy, @Context HttpServletRequest req) {
+
+        System.out.println("Hola voy a imprimir el token.");
+        System.out.println("Token: " + proxy.email);
+        smb.setEmail(proxy.email);
+        //teoría, creo que el set del atributo se tiene que hacer desde dentro del session.
+        //crear una función y llamarla que le ponga el token que le pasen por parametros.
+        System.out.println("Token after: " + proxy.email);
+        System.out.println("Token session: " + smb.getEmail());
+
+        return smb.getEmail();
+    }
+
+    public static class ProxySession implements Serializable {
+
+        public String email;
+
+        public ProxySession(String email) {
+            this.email = email;
+
+        }
+
+        public ProxySession() {
+            //Tiene que existir, no borrar.
+        }
+
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String gimmeMail() {
+
+        /*if (smb.getEmail() == null) {
+           System
+       }*/
+        return smb.getEmail();
+    }
+
+    /*
+    @POST
+    @Path("/preferencias")
+    @Produces({ MediaType.APPLICATION_JSON })
+    public List<CategoriaProxy> nuevaPreferenciaUsuario(CategoriaProxy categoria, @HeaderParam("bearer") String token) throws NotAuthenticatedException, AgendamlgNotFoundException {
+        String idUsuario = TokensUtils.getUserIdFromJwtTokenOrThrow(TokensUtils.decodeJwtToken(token));
+        Usuario usuario = usuarioFacade.find(idUsuario);
+        categoriaFacade.afegirPreferenciaUsuari(usuario, categoria.id);
+        return categoriaFacade.buscarPreferenciasUsuario(usuario).stream().map(CategoriaProxy::new).collect(Collectors.toList());
+    }
+     */
+ /*id: profile.getId(),
+      name: profile.getName(),
+      imageUrl: profile.getImageUrl(),
+      email: profile.getEmail(),
+      token: googleUser.getAuthResponse().id_token,*/
+    @GET
+    @Path("emailSerie/{idserie}")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String findEmailDeSerie(@PathParam("idserie") String idserie) {
+
+        Query q;
+        //q = this.em.createQuery("SELECT u.email FROM Usuario u, HasUsuario h WHERE h.idSerie = (:clave) AND h.idUsuario = u.id");
+        //+ "WHERE s.id = (:clave) AND h.idSerie = s.id AND h.idUsuario = u.id");
+        //SELECT u.email FROM iweb.usuario u, iweb.serie s, iweb.has_usuario h 
+        //WHERE s.id = (:clave) AND h.idSerie = s.id AND h.idUsuario = u.id;
+        
+        /*WHERE o.negocioCif IN (:negocioCif)
+
+        use
+
+        WHERE o.negocioCif.id in :collectionOfIdsOfNegocios
+        
+        select sl from Sensorlist sl // why select each and every field instead of selecting the entity?
+        left outer join sl.sensorTagsCollection st
+        where st.sensorId is null
+        */
+        
+        q = this.em.createQuery("SELECT u.email FROM Usuario u LEFT OUTER JOIN u.hasUsuarioCollection h WHERE h.idSerie.id = (:clave)");
+        
+        int intIdSerie = Integer.parseInt(idserie);
+        q.setParameter("clave", intIdSerie);
+
+        if (q.getResultList().size() > 0) {
+        String result = (String) q.getResultList().get(0);
+        //cuando llega aquí peta.
+        return result;
+        } else {
+        return "-1";
+        }
+
+    }
+
+
 }
