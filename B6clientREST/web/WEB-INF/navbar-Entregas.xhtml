@@ -23,6 +23,7 @@ and open the template in the editor.
                 <h:commandButton class="btn btn-outline-light" type="submit" value="Search" action="#{misEntregasManagedBean.buscar()}" />
                 <h:commandButton action="#{misSeriesManagedBean.navegarSeies()}" class="btn btn-outline-light" style="margin-left:10px" value="Mis Series"/>
                 <h:commandButton action="#{misEntregasManagedBean.navegarEntregas()}" class="btn btn-outline-light" style="margin-left:10px" value="Mis Entregas"/>
+                <h:commandButton class="btn btn-primary" onclick="signOut();" value="Logout" style="margin-left:10px"/>
             </h:form>
         </nav>
     </body>
