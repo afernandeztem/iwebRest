@@ -21,7 +21,7 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import model.superHero;
+import model.Pelicula;
 
 /**
  * Created by Rodrii on 19/07/2018.
@@ -30,9 +30,11 @@ public final class QueryUtilsSuperHero {
 
     private static final String LOG_TAG = QueryUtilsSuperHero.class.getSimpleName();
     final static String NO_CONTRIBUTOR = "Unknown";
+    private static final String URL = "https://api.themoviedb.org/3/search/movie?api_key=c44f3d48c47012b24473934393cf026c&language=es-ES&query=";
+    private static final String URL_2 = "&page=1&include_adult=false";
 
-    public static superHero fetchDatos(String requestUrl){
-        URL url = createURL(requestUrl);
+    public static List<Pelicula> fetchPeliculas(String name) {
+        URL url = createURL(URL + name + URL_2);
         String jsonResponse = null;
 
         try {
@@ -41,8 +43,8 @@ public final class QueryUtilsSuperHero {
             System.out.println(LOG_TAG + "Error closing input stream");
         }
 
-        superHero heroe = extractDatos(jsonResponse);
-        return heroe;
+        List<Pelicula> peliculas = extractPeliculas(jsonResponse);
+        return peliculas;
     }
 
     // Crea la URL
@@ -56,10 +58,13 @@ public final class QueryUtilsSuperHero {
         return url;
     }
 
-    private static superHero extractDatos(String PeliculaJSON) {
+    private static List<Pelicula> extractPeliculas(String PeliculaJSON) {
 
-        superHero heroe = new superHero();
-        // Si la respuesta JSON está vacía devuelvo null, pues no hay datos
+        List<Pelicula> peliculas = new ArrayList<>();
+        String title;
+        String path;
+        String overview;
+        // Si la respuesta JSON estÃ¡ vacÃ­a devuelvo null, pues no hay datos
         // asociados a esa id
         if (PeliculaJSON.length() == 0) {
             return null;
@@ -67,35 +72,24 @@ public final class QueryUtilsSuperHero {
             try {
 
                 JSONObject root = new JSONObject(PeliculaJSON);
-                JSONObject data = root.getJSONObject("data");
+                JSONArray results = root.getJSONArray("results");
 
-                if (data.getInt("total") >= 1) {
-                    JSONArray results = data.getJSONArray("results");
-                    JSONObject primerHeroe = results.getJSONObject(0);
-                    JSONObject thumbnail = primerHeroe.getJSONObject("thumbnail");
-                    heroe.setPath(thumbnail.getString("path")+ "." + thumbnail.getString("extension"));
-                    
-                    
-                    JSONObject comics = primerHeroe.getJSONObject("comics");
-                    JSONArray items = comics.getJSONArray("items");
-                    
-                    List<String> comicsHeroes = new ArrayList<>();
-                    for(int i=0; i<items.length(); i++){
-                        JSONObject comic = items.getJSONObject(i);
-                        comicsHeroes.add(comic.getString("name"));
-                    }
-                    
-
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject pelicula = results.getJSONObject(i);
+                    title = pelicula.getString("title");
+                    path = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/" + pelicula.getString("poster_path");
+                    overview = pelicula.getString("overview");
+                    peliculas.add(new Pelicula(title, path, overview));
                 }
 
             } catch (JSONException e) {
                 System.out.println("QueryUtils: Problem parsing the Pelicula JSON results " + e);
             }
-            return heroe;
+            return peliculas;
         }
     }
 
-    //Establece la conexión Http
+//Establece la conexiÃ³n Http
     private static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
 

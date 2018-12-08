@@ -11,11 +11,13 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
-import model.superHero;
+import javax.inject.Named;
+import model.Pelicula;
 import utils.QueryUtilsSuperHero;
 
 /**
@@ -25,14 +27,8 @@ import utils.QueryUtilsSuperHero;
 @Named(value = "heroeManagedBean")
 @RequestScoped
 public class heroeManagedBean {
-
-    private static final String URL = "https://gateway.marvel.com:443/v1/public/characters?name=";
-    private static final String URL_2 = "&apikey=63605a09865bc7f7e9b8b75792c19804";
-    private String ts;
-    private String publicKey = "63605a09865bc7f7e9b8b75792c19804";
-    private String privateKey = "d03184de68b4df8feeda3fff72d8e7927953df41";
-
     private String name;
+    private List<Pelicula> peliculas;
 
     /**
      * Creates a new instance of heroeManagedBean
@@ -40,18 +36,21 @@ public class heroeManagedBean {
     public heroeManagedBean() {
     }
 
+    public List<Pelicula> getPeliculas() {
+        return peliculas;
+    }
+
+    public void setPeliculas(List<Pelicula> peliculas) {
+        this.peliculas = peliculas;
+    }
+    
+
     public void onParameterReceived() throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        superHero heroe = new superHero();
-        ts = Integer.toString(new Random(System.currentTimeMillis()).nextInt());
+        List<Pelicula> peliculas  = new ArrayList<>();
         /*MessageDigest md = MessageDigest.getInstance("MD5");
         String url = URL + URLEncoder.encode(name, "UTF-8") + URL_2 + "&ts=" + ts + "&hash=" +  md.digest((ts+publicKey+privateKey).getBytes()).toString();*/
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        String toHash = ts + privateKey + publicKey;
-        String hash = new BigInteger(1, md.digest(toHash.getBytes())).toString(16);
-        String url = URL + URLEncoder.encode(name, "UTF-8") + URL_2 + "&ts=" + ts + "&hash=" +  hash;
-        System.out.println("yeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        System.out.println(url);
-        heroe = QueryUtilsSuperHero.fetchDatos(url);
+        peliculas = QueryUtilsSuperHero.fetchPeliculas(this.name);
+        this.peliculas = peliculas;
     }
 
     public String getName() {

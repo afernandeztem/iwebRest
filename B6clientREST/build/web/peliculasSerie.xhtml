@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <f:metadata>
+        <f:viewParam name="name" value="#{heroeManagedBean.name}"/>
+        <f:event type="preRenderView" listener="#{heroeManagedBean.onParameterReceived()}" />
+    </f:metadata>
+
+    <h:head>
+        <title>PeliculasSerie   </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
+        <link rel="stylesheet" type="text/css" href="assets/css/styles.css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Chivo" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100i" rel="stylesheet"/>
+    </h:head>
+
+    <h:body style="background-color: #F9F9FA">
+
+        <ui:include src="/WEB-INF/navbar-Series.xhtml"/>
+
+        <h:panelGroup rendered="#{heroeManagedBean.peliculas.size() == 0}">
+            <h2>No existen películas asociadas a esta serie</h2>
+        </h:panelGroup>
+
+
+        <div class="card-columns" style="padding: 10px; position: relative">
+            <ui:repeat  value="#{heroeManagedBean.peliculas}" var="pelicula" rendered="#{!(heroeManagedBean.peliculas.size() == 0)}">
+                <div class="card" style="width: 100%; margin: 0 auto; margin-top: 20px; height: 950px">
+
+                    <img class="card-img-top" src= "#{pelicula.path}" alt="No Internet Connection" width="200" height="400" >
+                        <script data-pin-hover="true" data-pin-tall="true" data-pin-round="true" src="//assets.pinterest.com/js/pinit.js"></script>
+                    </img>
+                    <div class="card-body" >
+                        <h1 style="font-family: 'Chivo', sans-serif;">#{pelicula.title}</h1>
+                        <hr/>
+                        <h7 style="font-family: 'Roboto', sans-serif;">#{pelicula.overview}</h7>
+                    </div>
+                </div>
+            </ui:repeat>
+        </div>
+    </h:body>
+</html>
+
