@@ -33,8 +33,8 @@ public final class QueryUtilsSuperHero {
     private static final String URL = "https://api.themoviedb.org/3/search/movie?api_key=c44f3d48c47012b24473934393cf026c&language=es-ES&query=";
     private static final String URL_2 = "&page=1&include_adult=false";
 
-    public static List<Pelicula> fetchPeliculas(String name) {
-        URL url = createURL(URL + name + URL_2);
+    public static List<Pelicula> fetchPeliculas(String name) throws UnsupportedEncodingException {
+        URL url = createURL(URL + URLEncoder.encode(name, "UTF-8") + URL_2);
         String jsonResponse = null;
 
         try {

@@ -9,6 +9,7 @@ import client.SerieClient;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import entity.Serie;
+import java.io.UnsupportedEncodingException;
 import utils.QueryUtilsUnsplash;
 
 /**
@@ -83,7 +84,7 @@ public class crearSerieManagedBean {
         this.valoracion = valoracion;
     }
 
-    public String crear() {
+    public String crear() throws UnsupportedEncodingException {
 
         serie = new Serie();
 

@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -31,8 +32,8 @@ public final class QueryUtilsUnsplash {
     private static final String TAM = "/290x160";
 
     // llamado para extraer tanto la Valoración como el la url del Póster
-    public static String fetchImagenId(String queryParameter) {
-        String requestUrl = URL + queryParameter;
+    public static String fetchImagenId(String queryParameter) throws UnsupportedEncodingException {
+        String requestUrl = URL + URLEncoder.encode(queryParameter, "UTF-8");
         URL url = createURL(requestUrl);
         String jsonResponse = null;
 
