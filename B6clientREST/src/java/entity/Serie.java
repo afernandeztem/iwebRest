@@ -5,6 +5,7 @@
  */
 package entity;
 
+import entity.HasUsuario;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -38,6 +39,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Serie.findByDescripcion", query = "SELECT s FROM Serie s WHERE s.descripcion = :descripcion")
     , @NamedQuery(name = "Serie.findByValoracion", query = "SELECT s FROM Serie s WHERE s.valoracion = :valoracion")})
 public class Serie implements Serializable {
+
+   
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSerie")
+    private Collection<HasUsuario> hasUsuarioCollection;
 
     @Size(max = 255)
     @Column(name = "imagen")
@@ -160,6 +165,15 @@ public class Serie implements Serializable {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    @XmlTransient
+    public Collection<HasUsuario> getHasUsuarioCollection() {
+        return hasUsuarioCollection;
+    }
+
+    public void setHasUsuarioCollection(Collection<HasUsuario> hasUsuarioCollection) {
+        this.hasUsuarioCollection = hasUsuarioCollection;
     }
     
 }

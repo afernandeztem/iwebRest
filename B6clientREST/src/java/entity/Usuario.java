@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities;
+package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -35,13 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findById", query = "SELECT u FROM Usuario u WHERE u.id = :id")
     , @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre")
     , @NamedQuery(name = "Usuario.findByUrlFoto", query = "SELECT u FROM Usuario u WHERE u.urlFoto = :urlFoto")
-    , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")})
+    , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
+    , @NamedQuery(name = "Usuario.findByConectado", query = "SELECT u FROM Usuario u WHERE u.conectado = :conectado")})
 public class Usuario implements Serializable {
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "conectado")
-    private int conectado;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -63,6 +59,10 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "email")
     private String email;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "conectado")
+    private int conectado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private Collection<HasUsuario> hasUsuarioCollection;
 
@@ -73,10 +73,11 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public Usuario(Integer id, String urlFoto, String email) {
+    public Usuario(Integer id, String urlFoto, String email, int conectado) {
         this.id = id;
         this.urlFoto = urlFoto;
         this.email = email;
+        this.conectado = conectado;
     }
 
     public Integer getId() {
@@ -111,6 +112,14 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
+    public int getConectado() {
+        return conectado;
+    }
+
+    public void setConectado(int conectado) {
+        this.conectado = conectado;
+    }
+
     @XmlTransient
     public Collection<HasUsuario> getHasUsuarioCollection() {
         return hasUsuarioCollection;
@@ -142,15 +151,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Usuario[ id=" + id + " ]";
-    }
-
-    public int getConectado() {
-        return conectado;
-    }
-
-    public void setConectado(int conectado) {
-        this.conectado = conectado;
+        return "entity.Usuario[ id=" + id + " ]";
     }
     
 }

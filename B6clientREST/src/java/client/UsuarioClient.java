@@ -5,12 +5,9 @@
  */
 package client;
 
-import javax.inject.Inject;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
-import managed.SessionManagedBean;
-
 
 /**
  * Jersey REST client generated for REST resource:UsuarioFacadeREST
@@ -29,13 +26,15 @@ public class UsuarioClient {
 
     private WebTarget webTarget;
     private Client client;
-    private static final String BASE_URI = "http://localhost:8080/B6clientREST/webresources";
-    
-    @Inject private SessionManagedBean sb;
+    private static final String BASE_URI = "http://localhost:8080/B6servidorREST/webresources";
 
     public UsuarioClient() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI).path("entities.usuario");
+    }
+
+    public String loadSeries() throws ClientErrorException {
+        return webTarget.path("loadseries").request().post(null, String.class);
     }
 
     public String countREST() throws ClientErrorException {
@@ -64,6 +63,11 @@ public class UsuarioClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public String gimmeMail() throws ClientErrorException {
+        WebTarget resource = webTarget;
+        return resource.request(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
+    }
+
     public <T> T find_XML(Class<T> responseType, String id) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
@@ -86,6 +90,12 @@ public class UsuarioClient {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("{0}/{1}", new Object[]{from, to}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public String findEmailDeSerie(String idserie) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("emailSerie/{0}", new Object[]{idserie}));
+        return resource.request(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
     }
 
     public void create_XML(Object requestEntity) throws ClientErrorException {

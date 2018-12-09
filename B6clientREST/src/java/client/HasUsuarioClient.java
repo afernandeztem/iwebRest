@@ -14,7 +14,7 @@ import javax.ws.rs.client.WebTarget;
  * [entities.hasusuario]<br>
  * USAGE:
  * <pre>
- *        HasUsuario client = new HasUsuario();
+ *        HasUsuarioClient client = new HasUsuarioClient();
  *        Object response = client.XXX(...);
  *        // do whatever with response
  *        client.close();
@@ -22,13 +22,13 @@ import javax.ws.rs.client.WebTarget;
  *
  * @author user
  */
-public class HasUsuario {
+public class HasUsuarioClient {
 
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/B6servidorREST/webresources";
 
-    public HasUsuario() {
+    public HasUsuarioClient() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI).path("entities.hasusuario");
     }
