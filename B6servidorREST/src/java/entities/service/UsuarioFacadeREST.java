@@ -5,6 +5,7 @@
  */
 package entities.service;
 
+import entities.Serie;
 import entities.Usuario;
 import java.io.Serializable;
 import java.util.List;
@@ -37,7 +38,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
 
     @PersistenceContext(unitName = "B6servidorRESTPU")
     private EntityManager em;
-    
+
     @Inject
     private SessionBean smb;
 
@@ -116,16 +117,54 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         }
     }
 
+    @GET
+    @Path("usuarioConectado")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Usuario findUsuarioConectado() {
+
+        Query q;
+        q = this.em.createQuery("SELECT u FROM Usuario u WHERE u.conectado = 1");
+
+        if (q.getResultList().size() > 0) {
+            Usuario result = (Usuario) q.getResultList().get(0);
+
+            return result;
+        } else {
+            return null;
+        }
+    }
+
+    @GET
+    @Path("seriesDeUsuario/{email}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Serie> findSeriesDeUsuario(@PathParam("email") String email) {
+
+        //unlog all
+        Query q;
+        q = this.em.createQuery("SELECT s FROM Serie s LEFT OUTER JOIN s.hasUsuarioCollection h WHERE h.idUsuario.email = (:clave)");
+        q.setParameter("clave", email);
+        
+        if (q.getResultList().size() > 0) {
+            System.out.println("Size lista series usuario: " + q.getResultList().size());
+            List<Serie> lista = (List<Serie>) q.getResultList();
+
+            return lista;
+        } else {
+            System.out.println("Size lista series usuario nula");
+            return null;
+        }
+    }
+
     @POST
     @Path("/welcome")
     @Produces(MediaType.TEXT_PLAIN)
     public String login(UsuarioProxy proxy, @Context HttpServletRequest req) {
-                
+
         //unlog all
         Query q;
-        q = this.em.createQuery("UPDATE Usuario u SET u.conectado = 0");  
+        q = this.em.createQuery("UPDATE Usuario u SET u.conectado = 0");
         q.executeUpdate();
-        
+
         Usuario u = this.findConEmail(proxy.email);
         if (u != null) {
             //actualizo la información del usuario existente
@@ -149,8 +188,6 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
             this.create(nuevo);
         }
 
-        
-        
         return "ok";
     }
 
@@ -161,13 +198,12 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         public String imageUrl;
         public String email;
 
-
         public UsuarioProxy(int id, String name, String imageUrl, String email, String token) {
             this.id = id;
             this.name = name;
             this.imageUrl = imageUrl;
             this.email = email;
-            
+
         }
 
         public UsuarioProxy() {
@@ -179,7 +215,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
             this.name = u.getNombre();
             this.imageUrl = u.getUrlFoto();
             this.email = u.getEmail();
-           
+
         }
 
     }
@@ -200,8 +236,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
       imageUrl: profile.getImageUrl(),
       email: profile.getEmail(),
       token: googleUser.getAuthResponse().id_token,*/
-
- // /loadseries
+    // /loadseries
     @POST
     @Path("/loadseries")
     @Produces(MediaType.TEXT_PLAIN)
@@ -269,7 +304,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         //+ "WHERE s.id = (:clave) AND h.idSerie = s.id AND h.idUsuario = u.id");
         //SELECT u.email FROM iweb.usuario u, iweb.serie s, iweb.has_usuario h 
         //WHERE s.id = (:clave) AND h.idSerie = s.id AND h.idUsuario = u.id;
-        
+
         /*WHERE o.negocioCif IN (:negocioCif)
 
         use
@@ -279,22 +314,20 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         select sl from Sensorlist sl // why select each and every field instead of selecting the entity?
         left outer join sl.sensorTagsCollection st
         where st.sensorId is null
-        */
-        
+         */
         q = this.em.createQuery("SELECT u.email FROM Usuario u LEFT OUTER JOIN u.hasUsuarioCollection h WHERE h.idSerie.id = (:clave)");
-        
+
         int intIdSerie = Integer.parseInt(idserie);
         q.setParameter("clave", intIdSerie);
 
         if (q.getResultList().size() > 0) {
-        String result = (String) q.getResultList().get(0);
-        //cuando llega aquí peta.
-        return result;
+            String result = (String) q.getResultList().get(0);
+            //cuando llega aquí peta.
+            return result;
         } else {
-        return "-1";
+            return "-1";
         }
 
     }
-
 
 }

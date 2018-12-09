@@ -8,8 +8,10 @@ package managed;
 import client.EntregaClient;
 import client.SerieClient;
 import client.HasEntregaClient;
+import client.UsuarioClient;
 import entity.Entrega;
 import entity.Serie;
+import entity.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,7 @@ import utils.QueryUtilsUnsplash;
 public class MisSeriesManagedBean implements Serializable {
 
     private List<Serie> series;
+    private Usuario usuario;
     private String busqueda;
     private List<Serie> resultadoBusqueda = null;
     private Integer refresh = 0;
@@ -68,6 +71,36 @@ public class MisSeriesManagedBean implements Serializable {
         return "misSeries";
     }
 
+    public String obtenerMisSeries() {
+        SerieClient client = new SerieClient();
+        UsuarioClient userClient = new UsuarioClient();
+        //Response r = client.findAll_XML(Response.class);
+        
+        Response r2 = userClient.findUsuarioConectado_XML(Response.class);
+        if (r2.getStatus() == 200) {
+            usuario = r2.readEntity(Usuario.class);
+        } else {
+            System.out.println("Error al obtener el usuario conectado.");
+            //no debería dar error
+        }
+        
+        Response r = userClient.findSeriesDeUsuario_XML(Response.class,usuario.getEmail());
+        
+        //if (r.getStatus() == 200) {
+            GenericType<List<Serie>> genericType = new GenericType<List<Serie>>() {
+            };
+            List<Serie> allSeries = r.readEntity(genericType);
+            this.series = allSeries;
+        //} else {
+        if (this.series == null) {
+            System.out.println("No hay series asociadas al usuario");
+            this.series = new ArrayList<Serie>();
+        }
+        //}
+        
+        return "misSeriesOnly";
+    }
+    
     private void obtenerSeries() {
         SerieClient client = new SerieClient();
         Response r = client.findAll_XML(Response.class);
@@ -180,6 +213,39 @@ public class MisSeriesManagedBean implements Serializable {
         if (this.refresh == 1) {
             System.out.println("WAKI HE ENTRADO EN EL IF DE PARAMETER");
             obtenerSeries();
+            // this.refresh = false;
+        } else {
+            System.out.println("WAKI Soy menor que cero sorry xd serie");
+
+        }
+
+        // ...
+    }
+    
+    
+    public void onParameterReceivedOnly() {
+        // En progreso, Edu.
+        EntregaClient clienteEntrega = new EntregaClient();
+        SerieClient clienteSerie = new SerieClient();
+        HasEntregaClient hasEntregaClient = new HasEntregaClient();
+        if (this.eliminate != 0) {
+            Response responseEntregas = hasEntregaClient.findEntregaConIdSerie_XML(Response.class, String.valueOf(eliminate));
+            if (responseEntregas.getStatus() == 200) {
+                GenericType<List<Entrega>> genericType = new GenericType<List<Entrega>>() {
+                };
+                List<Entrega> entregasEliminar = responseEntregas.readEntity(genericType);
+                for (Entrega e : entregasEliminar) {
+                    clienteEntrega.remove(e.getId().toString());
+                }
+            }
+            clienteSerie.remove(String.valueOf(eliminate));
+            obtenerMisSeries();
+            this.eliminate = 0;
+        }
+        System.out.println("WAKI Hola en series he recibido un parametro BIENN");
+        if (this.refresh == 1) {
+            System.out.println("WAKI HE ENTRADO EN EL IF DE PARAMETER");
+            obtenerMisSeries();
             // this.refresh = false;
         } else {
             System.out.println("WAKI Soy menor que cero sorry xd serie");
