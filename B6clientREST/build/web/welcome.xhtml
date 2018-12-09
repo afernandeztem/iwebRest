@@ -13,6 +13,9 @@
         <meta name="google-signin-client_id" content="626868915968-rsf0b1aa5s0d2au8055kbnmft0amc9ra.apps.googleusercontent.com"></meta>
         <script>
             function onSignIn(googleUser) {
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut();                
+                
                 var profile = googleUser.getBasicProfile();
                 console.log('ID: ' + profile.getId() + 'Do not send to your backend! Use an ID token instead.');
                 console.log('Name: ' + profile.getName());

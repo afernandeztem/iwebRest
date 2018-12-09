@@ -120,24 +120,31 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Path("/welcome")
     @Produces(MediaType.TEXT_PLAIN)
     public String login(UsuarioProxy proxy, @Context HttpServletRequest req) {
-       
+                
+        //unlog all
+        Query q;
+        q = this.em.createQuery("UPDATE Usuario u SET u.conectado = 0");  
+        q.executeUpdate();
+        
         Usuario u = this.findConEmail(proxy.email);
         if (u != null) {
             //actualizo la información del usuario existente
-
+            System.out.println("Usuario encontrado, actualizando.");
             u.setNombre(proxy.name);
             u.setUrlFoto(proxy.imageUrl);
             u.setEmail(proxy.email);
+            u.setConectado(1);
             this.edit(u);
 
         } else {
-
+            System.out.println("Usuario no encontrado, creando.");
             Usuario nuevo = new Usuario();
             //No podemos setear la id. La id se autogenera
             //nuevo.setId(proxy.id);
             nuevo.setNombre(proxy.name);
             nuevo.setUrlFoto(proxy.imageUrl);
             nuevo.setEmail(proxy.email);
+            nuevo.setConectado(1);
 
             this.create(nuevo);
         }
