@@ -77,10 +77,12 @@
                         <h3>Descripción: #{serie.descripcion}</h3>
                         <h3>Valoración: #{serie.valoracion}</h3>
                         <div style="margin-top: 20px; margin-bottom: 10px; position: absolute; left: 0px; bottom: 0px; margin-left: 20px">
+                            <ui:fragment rendered="#{misSeriesManagedBean.esMiSerie(serie.id)}">
                             <a class="btn btn-outline-primary" href="editarSerie.jsf?id=#{serie.id}"> Editar </a>
                             <a class="btn btn-outline-danger" href="misSeries.jsf?eliminate=#{serie.id}" style="color: #fb3f00; text-decoration: none;"> Eliminar </a>
+                            </ui:fragment>
                             <a class="btn btn-outline-warning" href="peliculasSerie.jsf?name=#{serie.titulo}" style="color: #fb3f00; text-decoration: none;"> Peliculas</a>
-
+                            
                         </div>
                     </div>
                 </div>

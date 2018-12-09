@@ -8,6 +8,7 @@ package client;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
 
 /**
  * Jersey REST client generated for REST resource:UsuarioFacadeREST
@@ -94,6 +95,12 @@ public class UsuarioClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public String findBoolSerieDeUsuario(String idSerie) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("boolSerieDeUsuario/{0}", new Object[]{idSerie}));
+        return resource.request(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
+    }
+
     public String login() throws ClientErrorException {
         return webTarget.path("welcome").request().post(null, String.class);
     }
@@ -151,5 +158,7 @@ public class UsuarioClient {
     public void close() {
         client.close();
     }
+
+  
     
 }

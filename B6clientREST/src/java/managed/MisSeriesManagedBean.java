@@ -254,5 +254,25 @@ public class MisSeriesManagedBean implements Serializable {
 
         // ...
     }
+    
+    
+    public boolean esMiSerie (int idSerie){
+        System.out.println("Comprobando dueño de la serie con id: " + idSerie);
+        UsuarioClient userClient = new UsuarioClient();
+        String idSerieStr = "" + idSerie;
+        String r = userClient.findBoolSerieDeUsuario(idSerieStr);
+        
+       
+        System.out.println("¿EsMiSerie? Respuesta:" + r);
+        if (r.equals("ok")) {
+            System.out.println("Sí, es mi serie, true");
+            return true;
+        } else {
+            System.out.println("NO es mi serie, false");
+            return false;
+        }
+        
+           
+    }
 
 }

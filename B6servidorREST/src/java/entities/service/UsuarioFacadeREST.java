@@ -116,6 +116,40 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
             return null;
         }
     }
+    
+    @GET
+    @Path("boolSerieDeUsuario/{idSerie}")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String findBoolSerieDeUsuario(@PathParam("idSerie") String idSerie) {
+
+        
+        Usuario u = this.findUsuarioConectado();
+        
+        if (u.getEmail().equals("pruebaparaingweb@gmail.com")){
+            System.out.println("Usuario con privilegios especiales: " + u.getEmail());
+            return "ok";
+            
+        } else {
+        
+        Query q;
+        q = this.em.createQuery("SELECT s FROM Serie s LEFT OUTER JOIN s.hasUsuarioCollection h WHERE s.id = (:clave2) AND h.idUsuario.email = (:clave)");
+                
+                 
+        q.setParameter("clave", u.getEmail());
+        q.setParameter("clave2", Integer.parseInt(idSerie));
+
+        if (q.getResultList().size() > 0) {
+            System.out.println("Bool true: " + q.getResultList().size());
+            
+            return "ok";
+        } else {
+             System.out.println("Bool false: :(");
+            return "notfound";
+        }
+        
+        }
+    }
+    
 
     @GET
     @Path("usuarioConectado")
