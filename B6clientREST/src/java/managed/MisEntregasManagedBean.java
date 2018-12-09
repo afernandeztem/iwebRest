@@ -11,7 +11,10 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import client.EntregaClient;
 import client.HasEntregaClient;
+import client.SerieClient;
+import client.UsuarioClient;
 import entity.Serie;
+import entity.Usuario;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -190,6 +193,87 @@ public class MisEntregasManagedBean {
         }
         
         return d;
+    }
+    
+    public boolean esMiEntrega (int idEntrega){
+        System.out.println("Comprobando dueño de la serie con id: " + idEntrega);
+        UsuarioClient userClient = new UsuarioClient();
+        String idSerieStr = "" + idEntrega;
+        
+        HasEntregaClient hasEntregaClient = new HasEntregaClient();
+        Serie serie = null;
+        
+        Response rEntrega = hasEntregaClient.findSerieConEntrega_XML(Response.class, Integer.toString(idEntrega));
+        if (rEntrega.getStatus() == 200) {
+            GenericType<Serie> genericType = new GenericType<Serie>() {
+            };
+            serie= rEntrega.readEntity(genericType);
+        }
+        
+        String r = userClient.findBoolSerieDeUsuario(Integer.toString(serie.getId()));
+        
+       
+        System.out.println("¿EsMiSerie? Respuesta:" + r);
+        if (r.equals("ok")) {
+            System.out.println("Sí, es mi serie, true");
+            return true;
+        } else {
+            System.out.println("NO es mi serie, false");
+            return false;
+        }
+        
+           
+    }
+    
+    public String obtenerMisEntregas() {
+        
+        Usuario usuario = null;
+        List<Serie> series = new ArrayList<>();
+        SerieClient client = new SerieClient();
+        UsuarioClient userClient = new UsuarioClient();
+        //Response r = client.findAll_XML(Response.class);
+        List<Entrega> misEntregas= new ArrayList<>();
+        HasEntregaClient hasEntregaClient = new HasEntregaClient();
+        
+        Response r2 = userClient.findUsuarioConectado_XML(Response.class);
+        if (r2.getStatus() == 200) {
+            usuario = r2.readEntity(Usuario.class);
+        } else {
+            System.out.println("Error al obtener el usuario conectado.");
+            //no debería dar error
+        }
+        
+        Response r = userClient.findSeriesDeUsuario_XML(Response.class,usuario.getEmail());
+        
+        //if (r.getStatus() == 200) {
+            GenericType<List<Serie>> genericType = new GenericType<List<Serie>>() {
+            };
+            List<Serie> allSeries = r.readEntity(genericType);
+            series = allSeries;
+        //} else {
+        if (series == null) {
+            System.out.println("No hay series asociadas al usuario");
+            series = new ArrayList<Serie>();
+        }
+        //}
+        for(Serie s: series){
+            
+            Response rEntrega= hasEntregaClient.findEntregaConIdSerie_XML(Response.class, Integer.toString(s.getId()));
+       
+       if (rEntrega.getStatus() == 200) {
+            GenericType<List<Entrega>> genericType2 = new GenericType<List<Entrega>>() {
+            };
+            List<Entrega> allEntregas = rEntrega.readEntity(genericType2);
+            if(entregas==null){
+                this.entregas = allEntregas;
+            }else{
+                this.entregas.addAll(allEntregas);
+            }
+        }
+            
+        }
+        
+        return "misEntregasOnly";
     }
 
 }

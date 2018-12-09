@@ -2,9 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Rodrii/Documents/GitHub/putamierda/iwebREST/B6clientREST/src/java/managed/crearSerieManagedBean.java</file>
-        </group>
         <group name="NEW">
             <file>file:/C:/Users/user/Desktop/Ingeniería%20del%20Software/2018-2019/Ingeniería%20Web/iwebRest/iwebREST8/iwebREST/B6clientREST/web/index.xhtml</file>
             <file>file:/C:/Users/user/Desktop/Ingeniería%20del%20Software/2018-2019/Ingeniería%20Web/iwebRest/iwebREST8/iwebREST/B6clientREST/src/java/entity/HasUsuario.java</file>
@@ -13,6 +10,11 @@
             <file>file:/C:/Users/user/Desktop/Ingeniería%20del%20Software/2018-2019/Ingeniería%20Web/iwebRest/iwebREST8/iwebREST/B6clientREST/web/welcome.xhtml</file>
             <file>file:/C:/Users/user/Desktop/Ingeniería%20del%20Software/2018-2019/Ingeniería%20Web/iwebRest/iwebREST8/iwebREST/B6clientREST/src/java/entity/Serie.java</file>
             <file>file:/C:/Users/user/Desktop/Ingeniería%20del%20Software/2018-2019/Ingeniería%20Web/iwebRest/iwebREST8/iwebREST/B6clientREST/src/java/client/UsuarioClient.java</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/Francis/Documents/GitHub/iwebREST/B6clientREST/web/misEntregas.xhtml</file>
+            <file>file:/C:/Users/Francis/Documents/GitHub/iwebREST/B6clientREST/src/java/client/HasEntregaClient.java</file>
+            <file>file:/C:/Users/Francis/Documents/GitHub/iwebREST/B6clientREST/src/java/managed/MisEntregasManagedBean.java</file>
         </group>
     </open-files>
 </project-private>

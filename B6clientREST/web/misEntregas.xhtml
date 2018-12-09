@@ -59,6 +59,7 @@ and open the template in the editor.
 
         <div align="center" style="margin-top: 20px">
             <h:form>
+                <h:commandButton style="margin-right: 10px" class="btn btn-outline-dark" type="submit" value="Mis Entregas" action="#{misEntregasManagedBean.obtenerMisEntregas()}" />
                 <h:inputText p:class="btn btn-outline-dark" p:type="date" p:placeholder="Fecha inicio(YYYY-MM-DD)" value="#{misEntregasManagedBean.t1}" >
                     <f:convertDateTime pattern="yyyy-MM-dd"/>
                 </h:inputText>
@@ -78,8 +79,10 @@ and open the template in the editor.
                         <h3>Id: #{entrega.id}</h3>
                         <h3>Serie: #{misEntregasManagedBean.getSerieconEntrega(entrega)}</h3>
                         <div style="margin-top: 20px; margin-bottom: 10px; position: absolute; left: 0px; bottom: 0px; margin-left: 20px">
+                            <ui:fragment rendered="#{misEntregasManagedBean.esMiEntrega(entrega.id)}">
                             <a class="btn btn-outline-primary" href="editarEntrega.jsf?id=#{entrega.id}"> Editar </a>
                             <a class="btn btn-outline-danger" href="misEntregas.jsf?eliminate=#{entrega.id}"> Eliminar </a>
+                             </ui:fragment>
                         </div>
                     </div>
                 </div>
