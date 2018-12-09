@@ -112,6 +112,6 @@ public class crearSerieManagedBean {
         serieCliente = new SerieClient();
         serieCliente.create_XML(serie);
 
-        return "index?faces-redirect=true";
+        return "misSeries?refresh=1&faces-redirect=true";
     }
 }
