@@ -46,7 +46,7 @@
        
         <script src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
         
-        <ui:fragment rendered="#{editarSerieManagedBean.esMiSerie(editarSerieManagedBean.id)}">
+        <ui:fragment>
         
         <div style="padding: 20px">
             <h1> Serie "#{editarSerieManagedBean.id}" </h1>
@@ -102,20 +102,7 @@
         </div>
         </ui:fragment>
         
-        <ui:fragment rendered="#{!editarSerieManagedBean.esMiSerie(editarSerieManagedBean.id)}">
-
-           
-            <div class="text-center">
-                        <h1>No puedes editar esta serie...</h1>
-
-                    <h:form>
-                        <a style="margin-top: 20px" class="btn btn-outline-dark" href="index.jsf"> Volver </a>
-        
-                    </h:form>.
-
-              </div>
-        </ui:fragment>
-        
+                
     </h:body>
 </html>
 
