@@ -18,7 +18,7 @@ import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import model.Pelicula;
-import utils.QueryUtilsSuperHero;
+import utils.QueryUtilsFilms;
 
 /**
  *
@@ -49,7 +49,7 @@ public class heroeManagedBean {
         List<Pelicula> peliculas  = new ArrayList<>();
         /*MessageDigest md = MessageDigest.getInstance("MD5");
         String url = URL + URLEncoder.encode(name, "UTF-8") + URL_2 + "&ts=" + ts + "&hash=" +  md.digest((ts+publicKey+privateKey).getBytes()).toString();*/
-        peliculas = QueryUtilsSuperHero.fetchPeliculas(this.name);
+        peliculas = QueryUtilsFilms.fetchPeliculas(this.name);
         this.peliculas = peliculas;
     }
 

@@ -37,6 +37,30 @@
                     window.location.replace("http://localhost:8080/B6clientREST/welcome.jsf");
                 }
             }
+            
+            function check() {
+                
+                var inputId = document.getElementById("myForm:serieId").value;
+                var result;
+                fetch('/B6servidorREST/webresources/entities.usuario/boolSerieDeUsuario/{inputId}', {
+           
+                }).then((datos) => {
+                    result = datos;
+                    console.log("Result: " + result);
+
+                });
+                
+                
+                if (result) {
+                    console.log("Res es true " + result);
+                    document.getElementById('myForm').submit();
+                } else {
+                    console.log("Res es false " + result);
+                    alert("Error, no puedes subir contenido a una serie que no es tuya.");
+                }
+            }
+
+            
         </script>    
     </h:head>
 
@@ -46,19 +70,11 @@
         
         <script src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
         <div style="padding: 20px">
-
-
-            <!--Serie-->
-            <br/>
-            Lista de Series con id:
-            <br/>
-            <!--<h:selectOneMenu value="#{crearEntregaManagedBean.serieId}" >
-                <f:selectItems value="#{crearEntregaManagedBean.series}" var="s" itemValue="#{s.titulo}" itemLabel="#{s.titulo}" />
-            </h:selectOneMenu> -->
-            <br/>
+                
             <ui:repeat  value="#{crearEntregaManagedBean.series}" var="serie" rendered="#{!(misSeriesManagedBean.series.size() == 0)}">
-
-                <div class="card" style="margin-bottom: 15px">
+              
+               
+                <h:panelGroup layout="block" class="card" style="margin-bottom: 15px" rendered="#{misSeriesManagedBean.esMiSerie(serie.id) == true}">
                     <div class="card-header" >
                         <h6 class="mb-0">
                             <p style="color: #007bff" >
@@ -74,12 +90,12 @@
                             <strong>Valoración:</strong> #{serie.valoracion}
                         </div>
                     </div>
-                </div>
+                </h:panelGroup>
 
             </ui:repeat>
 
             <br/>
-            <h:form>
+            <h:form id="myForm">
 
                 Seleccionar id Serie*: <h:inputText p:type="text" p:class="form-control" id="serieId" binding="#{serieId}" p:placeholder="introducir id serie" value="#{crearEntregaManagedBean.serieId}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
@@ -100,7 +116,7 @@
 
                 <div class="form-group edit-profile-form-group">
 
-                    <a type="submit" class="btn btn-primary btn-raised" jsf:action="#{crearEntregaManagedBean.crear()}">Aceptar</a>
+                    <a type="submit" class="btn btn-primary btn-raised" jsf:action="#{crearEntregaManagedBean.crear()}" onclick="check()">Aceptar</a>
 
 
                 </div>

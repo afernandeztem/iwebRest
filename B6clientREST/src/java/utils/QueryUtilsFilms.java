@@ -26,9 +26,9 @@ import model.Pelicula;
 /**
  * Created by Rodrii on 19/07/2018.
  */
-public final class QueryUtilsSuperHero {
+public final class QueryUtilsFilms {
 
-    private static final String LOG_TAG = QueryUtilsSuperHero.class.getSimpleName();
+    private static final String LOG_TAG = QueryUtilsFilms.class.getSimpleName();
     final static String NO_CONTRIBUTOR = "Unknown";
     private static final String URL = "https://api.themoviedb.org/3/search/movie?api_key=c44f3d48c47012b24473934393cf026c&language=es-ES&query=";
     private static final String URL_2 = "&page=1&include_adult=false";
