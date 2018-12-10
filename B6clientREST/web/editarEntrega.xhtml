@@ -46,23 +46,26 @@
         
         <script src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
 
-        <h1> Entrega "#{editarEntregaManagedBean.id}" </h1>
-
+        
+        <h1 > Entrega "#{editarEntregaManagedBean.id}" </h1>
         <div style="padding: 20px">
             <h:form>
 
+                <div style="margin-top: 10px; margin-bottom: 10px">
                 <!--anotación -->
                 Anotación*:
                 <h:inputText p:type="text" p:class="btn btn-outline-dark" id="titulo" binding="#{titulo}" p:placeholder="#{editarEntregaManagedBean.anotacion}" value="#{editarEntregaManagedBean.anotacion}" validatorMessage="La lontigud de la anotación no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                 </h:inputText> 
-
+                </div>
+                
+                <div style="margin-top: 10px; margin-bottom: 10px">
                 <!-- fechaEntrega -->
                 FechaEntrega*: <h:inputText p:type="date" p:class="btn btn-outline-dark" id="categoria" binding="#{categoria}" p:placeholder="#{editarEntregaManagedBean.fecha_entrega}" value="#{editarEntregaManagedBean.fecha_entrega}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                     <f:convertDateTime pattern="yyyy-MM-dd"/>  
                 </h:inputText> 
-
+                </div>
 
                 <div class="form-group edit-profile-form-group">
 

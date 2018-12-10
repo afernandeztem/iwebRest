@@ -52,23 +52,29 @@
 
             <h:form>
 
+                <div style="margin-top: 10px; margin-bottom: 10px">
                 <!--titulo -->
                 Titulo*: <h:inputText p:type="text" p:class="btn btn-outline-dark" id="titulo" binding="#{titulo}" p:placeholder="#{editarSerieManagedBean.titulo}" value="#{editarSerieManagedBean.titulo}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                 </h:inputText> 
+                </div>
                 
+                <div style="margin-top: 10px; margin-bottom: 10px">
                 <!-- categoria -->
                 Categoria*: <h:inputText p:type="text" p:class="btn btn-outline-dark" id="categoria" binding="#{categoria}" p:placeholder="#{editarSerieManagedBean.categoria}" value="#{editarSerieManagedBean.categoria}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                 </h:inputText> 
+                </div>
                 
+                <div style="margin-top: 10px; margin-bottom: 10px">
                 <!--descripcion -->
                 Descripcion: <h:inputText p:type="text" p:class="btn btn-outline-dark" id="descripcion" binding="#{descripcion}" p:placeholder="#{editarSerieManagedBean.descripcion}" value="#{editarSerieManagedBean.descripcion}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
                     <f:validateLength minimum="0" maximum="255" />
                 </h:inputText> 
-                
+                </div>
                 <!--valoracion -->
-
+                
+                <div style="margin-top: 10px; margin-bottom: 10px">
                 Valoracion: <h:selectOneMenu id="valoracion" value = "#{editarSerieManagedBean.valoracion}">
                     <f:selectItem noSelectionOption="true" itemValue = "vacio" itemLabel = "" /> 
                     <f:selectItem itemValue = "1" itemLabel = "1" /> 
@@ -82,7 +88,8 @@
                     <f:selectItem itemValue = "9" itemLabel = "9" /> 
                     <f:selectItem itemValue = "10" itemLabel = "10" /> 
                 </h:selectOneMenu>
-                <br/>
+                </div>
+                
                 <div class="form-group edit-profile-form-group">
 
                     <h:commandButton style="margin-top: 20px" value="Guardar cambios" type="submit" class="btn btn-outline-dark" action="#{editarSerieManagedBean.editar()}" onclick="return alert('Serie editada correctamente');"/>

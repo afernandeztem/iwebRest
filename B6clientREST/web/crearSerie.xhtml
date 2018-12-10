@@ -41,33 +41,37 @@
     <h:body>
         <ui:include src="/WEB-INF/navbar-Series.xhtml"/>
         <!--La serie tiene un id, titulo, categoria, descripcion y valoracion -->
-        
-        <h:form>
-            
-        <!--titulo -->
-        Titulo*: <h:inputText p:type="text" p:class="form-control" id="titulo" binding="#{titulo}" p:placeholder="introducir titulo" value="#{crearSerieManagedBean.titulo}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
-            <f:validateLength minimum="0" maximum="255" />
-        </h:inputText> 
-        
-        <!-- categoria -->
-        Categoria*: <h:inputText p:type="text" p:class="form-control" id="categoria" binding="#{categoria}" p:placeholder="introducir categoria" value="#{crearSerieManagedBean.categoria}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
-            <f:validateLength minimum="0" maximum="255" />
-        </h:inputText> 
-        
-        <!--descripcion -->
-        Descripcion: <h:inputText p:type="text" p:class="form-control" id="descripcion" binding="#{descripcion}" p:placeholder="introducir descripcion" value="#{crearSerieManagedBean.descripcion}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
-            <f:validateLength minimum="0" maximum="255" />
-        </h:inputText> 
-        
-        <!--descripcion -->
-        URL imagen (si se deja vacío este campo se escogerá una imagen al azar de Unsplash):
-        <h:inputText p:type="text" p:class="form-control" p:placeholder="introducir url" value="#{crearSerieManagedBean.url}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
-        </h:inputText> 
-        
-        <!--valoracion -->
-        
-        Valoracion: <h:selectOneMenu id="valoracion" value = "#{crearSerieManagedBean.valoracion}">
-            <f:selectItem noSelectionOption="true" itemValue = "vacio" itemLabel = "" /> 
+
+        <div style="margin: 10px">
+
+            <h:form>
+
+                <!--titulo -->
+                Titulo*: <h:inputText p:type="text" p:class="form-control" id="titulo" binding="#{titulo}" p:placeholder="introducir titulo" value="#{crearSerieManagedBean.titulo}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+                    <f:validateLength minimum="0" maximum="255" />
+                </h:inputText> 
+
+                <!-- categoria -->
+                Categoria*: <h:inputText p:type="text" p:class="form-control" id="categoria" binding="#{categoria}" p:placeholder="introducir categoria" value="#{crearSerieManagedBean.categoria}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+                    <f:validateLength minimum="0" maximum="255" />
+                </h:inputText> 
+
+                <!--descripcion -->
+                Descripcion: <h:inputText p:type="text" p:class="form-control" id="descripcion" binding="#{descripcion}" p:placeholder="introducir descripcion" value="#{crearSerieManagedBean.descripcion}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+                    <f:validateLength minimum="0" maximum="255" />
+                </h:inputText> 
+
+                <!--descripcion -->
+                URL imagen (si se deja vacío este campo se escogerá una imagen al azar de Unsplash):
+                <h:inputText p:type="text" p:class="form-control" p:placeholder="introducir url" value="#{crearSerieManagedBean.url}" validatorMessage="La lontigud de la descripción no puede superar los 255 caracteres" >
+                </h:inputText> 
+
+                <!--valoracion -->
+
+                <div style="margin-top: 10px; margin-bottom: 10px">
+
+                    Valoracion: <h:selectOneMenu id="valoracion" value = "#{crearSerieManagedBean.valoracion}">
+                        <f:selectItem noSelectionOption="true" itemValue = "vacio" itemLabel = "" /> 
                         <f:selectItem itemValue = "1" itemLabel = "1" /> 
                         <f:selectItem itemValue = "2" itemLabel = "2" /> 
                         <f:selectItem itemValue = "3" itemLabel = "3" /> 
@@ -78,21 +82,22 @@
                         <f:selectItem itemValue = "8" itemLabel = "8" /> 
                         <f:selectItem itemValue = "9" itemLabel = "9" /> 
                         <f:selectItem itemValue = "10" itemLabel = "10" /> 
-        </h:selectOneMenu>
-        
-        <div class="form-group edit-profile-form-group">
-               
+                    </h:selectOneMenu>
+                </div>
+
+                <div class="form-group edit-profile-form-group">
+
                     <button type="submit" class="btn btn-primary btn-raised" jsf:action="#{crearSerieManagedBean.crear()}">Aceptar</button>
                     <a href="misSeries.jsf" class="btn btn-default btn-raised"/>
-                    
-          
-                
-        </div>
-        
-        Los campos marcados con asterisco(*) son obligatorios. 
-        
-        </h:form>
-              
+
+
+
+                </div>
+
+                Los campos marcados con asterisco(*) son obligatorios. 
+
+            </h:form>
+        </div> 
     </h:body>
 </html>
 
