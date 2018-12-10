@@ -18,8 +18,8 @@
                 auth2.signOut().then(function () {
                     console.log('User signed out.');
                 });
-                sessionStorage.setItem("emailSession","-1");
-                sessionStorage.setItem("tokenSession","-1");
+                sessionStorage.setItem("emailSession", "-1");
+                sessionStorage.setItem("tokenSession", "-1");
                 window.location.replace("http://localhost:8080/B6clientREST/welcome.jsf");
             }
 
@@ -29,7 +29,7 @@
                 });
                 var email = sessionStorage.getItem("emailSession");
                 if (email == null || email == "-1") {
-                   //¿Alerta?
+                    //¿Alerta?
                     window.location.replace("http://localhost:8080/B6clientREST/welcome.jsf");
                 } /*else {
                  
@@ -58,8 +58,9 @@
             background-repeat: no-repeat;
             background-size: cover" >
         <ui:include src="/WEB-INF/navbar-Series.xhtml"/>
-        <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 50px">Bienvenido a Drawdede <br/> tu gestor de Cómics</h1>
         
+        <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 50px; position: fixed; top: 40%; left: 50%"> Bienvenido a Drawdede "Nombre"<br/> </h1>
+
         <script src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
     </h:body>
 </html>

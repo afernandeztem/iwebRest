@@ -10,12 +10,12 @@
 
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-        <meta name="google-signin-client_id" content="626868915968-rsf0b1aa5s0d2au8055kbnmft0amc9ra.apps.googleusercontent.com"></meta>
+        <meta name="google-signin-client_id" content="626868915968-rsf0b1aa5s0d2au8055kbnmft0amc9ra.apps.googleusercontent.com"></meta>   
         <script>
             function onSignIn(googleUser) {
                 var auth2 = gapi.auth2.getAuthInstance();
-                auth2.signOut();                
-                
+                auth2.signOut();
+
                 var profile = googleUser.getBasicProfile();
                 console.log('ID: ' + profile.getId() + 'Do not send to your backend! Use an ID token instead.');
                 console.log('Name: ' + profile.getName());
@@ -90,22 +90,39 @@
                     window.location.replace("http://localhost:8080/B6clientREST/welcome.jsf");
                 });
             }
-            
+
         </script>
         <script src="https://apis.google.com/js/platform.js"></script>
 
+        
 
 
     </h:head>
+    
     <h:body style="background-image: url(assets/drawable/fondo4.png); height: 100%; 
             background-repeat: no-repeat;
             background-size: cover" >
-        <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 50px"> Bienvenido a Drawdede <br/> ¡Inicia sesión para disfrutar del contenido! </h1>
+        
+        
+                    
         <!--<h:form>
         <h:inputHidden id="token" value="# {sessionManagedBean.token}" />
         </h:form>-->
-        <div class="g-signin2" data-onsuccess="onSignIn" style="position: absolute;top: 10px;right: 10px;"></div>
-        
- 
+
+        <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 50px; position: fixed; top: 40%; left: 50%"> Drawdede <br/> tu gestor de Cómics</h1>
+
+
+        <img src="assets/drawable/pencil.svg" width="54px" height="54px" viewBox="0 0 54 54" style="position: fixed; top: 55%; left: 30%"></img>
+        <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 18px; position: fixed; top: 67%; left: 31.5%">Crea tus series</h1>
+
+        <img src="assets/drawable/plus.svg"  width="53px" height="53px" viewBox="0 0 53 53" style="position: fixed; top: 55.5%; left: 47%"></img>
+        <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 18px; position: fixed; top: 67%; left: 48.5%">Añádele entregas</h1>
+
+        <img src="assets/drawable/people.svg"  width="54px" height="54px" viewBox="0 0 54 54" style="position: fixed; top: 55%; left: 64%"></img>
+        <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 18px; position: fixed; top: 67%; left: 66%">Disfruta de la creación <br/>de otros usuarios</h1>
+
+        <div style="position: fixed;top: 85%;left: 51%;margin-top: -50px; margin-left: -100px;" class="g-signin2" data-onsuccess="onSignIn" ></div>
+
+
     </h:body>
 </html>
