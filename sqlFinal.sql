@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `iweb` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `iweb`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: iweb
@@ -27,7 +29,7 @@ CREATE TABLE `entrega` (
   `anotacion` varchar(255) DEFAULT NULL,
   `fecha_entrega` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +38,7 @@ CREATE TABLE `entrega` (
 
 LOCK TABLES `entrega` WRITE;
 /*!40000 ALTER TABLE `entrega` DISABLE KEYS */;
-INSERT INTO `entrega` VALUES (1,'Spiderman vs Venom','2005-02-11'),(2,'Lobezno Inmortal','1978-12-30'),(3,'Vatmóvil','2018-11-06'),(4,'Superman sin capa','2015-01-15');
+INSERT INTO `entrega` VALUES (1,'Spiderman vs Venom','2005-02-11'),(2,'Lobezno Inmortal','1978-12-30'),(3,'Batmóvil','2018-11-05'),(4,'Superman sin capa','2015-01-15');
 /*!40000 ALTER TABLE `entrega` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,7 +58,7 @@ CREATE TABLE `has_entrega` (
   KEY `FK_has_entrega_entrega_idx` (`idEntrega`),
   CONSTRAINT `FK_has_entrega_entrega` FOREIGN KEY (`idEntrega`) REFERENCES `entrega` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_has_entrega_serie` FOREIGN KEY (`idSerie`) REFERENCES `serie` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +67,7 @@ CREATE TABLE `has_entrega` (
 
 LOCK TABLES `has_entrega` WRITE;
 /*!40000 ALTER TABLE `has_entrega` DISABLE KEYS */;
-INSERT INTO `has_entrega` VALUES (1,1,1),(2,3,2),(3,2,3),(4,4,4);
+INSERT INTO `has_entrega` VALUES (1,1,1),(2,2,2),(3,3,3),(4,5,4);
 /*!40000 ALTER TABLE `has_entrega` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +116,7 @@ CREATE TABLE `serie` (
   `valoracion` int(11) DEFAULT NULL,
   `imagen` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +145,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +154,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Eduardo Guidet Jiménez','https://lh5.googleusercontent.com/-xl39n_OP18o/AAAAAAAAAAI/AAAAAAAAAGo/iv2Kvjy2TQ0/s96-c/photo.jpg','eduardogj96@gmail.com',1),(2,'Carlos Canales','https://i2.wp.com/content.invisioncic.com/Mevernote/monthly_2017_08/C.png.7f930ab0dcf675996aaea7002ffbede7.png','pruebaparaingweb@gmail.com',0);
+INSERT INTO `usuario` VALUES (1,'Eduardo Guidet Jiménez','https://lh5.googleusercontent.com/-xl39n_OP18o/AAAAAAAAAAI/AAAAAAAAAGo/iv2Kvjy2TQ0/s96-c/photo.jpg','eduardogj96@gmail.com',1),(2,'Carlos Canal','https://i2.wp.com/content.invisioncic.com/Mevernote/monthly_2017_08/C.png.7f930ab0dcf675996aaea7002ffbede7.png','pruebaparaingweb@gmail.com',0);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -165,4 +167,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-09 13:47:42
+-- Dump completed on 2018-12-10 20:12:43
