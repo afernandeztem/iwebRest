@@ -61,8 +61,9 @@
             background-size: cover" >
         <ui:include src="/WEB-INF/navbar-Series.xhtml"/>
         
-        <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 50px; position: fixed; top: 40%; left: 50%"> Bienvenido a Drawdede #{indexManagedBean.obtenerUsario().nombre}<br/> </h1>
-
+        <h1 align="center" class="titulo" style="color: #fff; font-family: 'Pacifico', cursive; font-size: 50px; position: fixed; top: 40%; left: 53%"> Bienvenido a Drawdede <br/> #{indexManagedBean.obtenerUsario().nombre}<br/> </h1>
+        <img src="#{indexManagedBean.obtenerUsario().urlFoto}"  style="border-radius: 50%; position: fixed; top: 34%; left: 27%" alt="Avatar"/>    
+        
         <script src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
     </h:body>
 </html>
