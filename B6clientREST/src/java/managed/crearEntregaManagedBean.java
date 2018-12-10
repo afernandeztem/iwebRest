@@ -21,6 +21,7 @@ import client.EntregaClient;
 import client.HasEntregaClient;
 import client.SerieClient;
 import java.util.ArrayList;
+import javax.inject.Inject;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
@@ -37,9 +38,12 @@ public class crearEntregaManagedBean {
      */
     public crearEntregaManagedBean() {
     }
-    
+
+    @Inject
+    MisSeriesManagedBean misSeriesBean;
+
     private int idEntrega;
-    
+
     private HasEntrega hasEntrega;
     private SerieClient serieClient;
     private EntregaClient entregaClient;
@@ -61,7 +65,7 @@ public class crearEntregaManagedBean {
     public void setSeries(List<Serie> series) {
         this.series = series;
     }
-    
+
     private Serie serie;
     private String serieId;
     private int idserie;
@@ -92,13 +96,11 @@ public class crearEntregaManagedBean {
     private Entrega entrega;
     private String anotacion;
     private Date fecha_entrega;
-    
- 
-    public String navegarCrearEntrega(){
-         obtenerSeries();
-         return "crearEntrega";
-    }
 
+    public String navegarCrearEntrega() {
+        obtenerSeries();
+        return "crearEntrega";
+    }
 
     public int getIdEntrega() {
         return idEntrega;
@@ -107,7 +109,7 @@ public class crearEntregaManagedBean {
     public void setIdEntrega(int idEntrega) {
         this.idEntrega = idEntrega;
     }
-    
+
     public Date getFecha_entrega() {
         return fecha_entrega;
     }
@@ -132,77 +134,74 @@ public class crearEntregaManagedBean {
         this.anotacion = anotacion;
     }
 
-   
-    public String crear() throws DatatypeConfigurationException{
-        
-        entregaClient= new EntregaClient();
-        serieClient= new SerieClient();
-        hasEntregaClient = new HasEntregaClient();
-        
-        entrega= new Entrega();
-        
-        if(!anotacion.equals("")){
-           entrega.setAnotacion(anotacion);
-        }
-       
-        
-        if(fecha_entrega!=null){
-        
-        entrega.setFechaEntrega(fecha_entrega);
-        }
-        
-        //creo la entrega
-        this.entregaClient.create_XML(entrega);
-        
-        //busco la entrega en la bd 
-        
-        Entrega nuevaEntrega;
-        Response r = this.entregaClient.findAll_XML(Response.class);
-        List<Entrega> listaEntrega;
-        
-        if (r.getStatus() == 200) {
-            GenericType<List<Entrega>> genericType = new GenericType<List<Entrega>>() {
-            };
-            List<Entrega> allEntregas = r.readEntity(genericType);
-            listaEntrega = allEntregas;
+    public String crear() throws DatatypeConfigurationException {
+
+        if (misSeriesBean.esMiSerie(Integer.parseInt(serieId)))  {
+
+            entregaClient = new EntregaClient();
+            serieClient = new SerieClient();
+            hasEntregaClient = new HasEntregaClient();
+
+            entrega = new Entrega();
+
+            if (!anotacion.equals("")) {
+                entrega.setAnotacion(anotacion);
+            }
+
+            if (fecha_entrega != null) {
+
+                entrega.setFechaEntrega(fecha_entrega);
+            }
+
+            //creo la entrega
+            this.entregaClient.create_XML(entrega);
+
+            //busco la entrega en la bd 
+            Entrega nuevaEntrega;
+            Response r = this.entregaClient.findAll_XML(Response.class);
+            List<Entrega> listaEntrega;
+
+            if (r.getStatus() == 200) {
+                GenericType<List<Entrega>> genericType = new GenericType<List<Entrega>>() {
+                };
+                List<Entrega> allEntregas = r.readEntity(genericType);
+                listaEntrega = allEntregas;
+            } else {
+                listaEntrega = new ArrayList<Entrega>();
+            }
+
+            //busco la entrega que acabo de crear para obtener el id y
+            //poder recargarla
+            nuevaEntrega = listaEntrega.get(listaEntrega.size() - 1);
+
+            this.hasEntrega = new HasEntrega();
+
+            Response rSerie = this.serieClient.find_XML(Response.class, serieId);
+
+            if (rSerie.getStatus() == 200) {
+                GenericType<Serie> genericType = new GenericType<Serie>() {
+                };
+                this.serie = rSerie.readEntity(genericType);
+
+            }
+
+            hasEntrega.setIdSerie(serie);
+            hasEntrega.setIdEntrega(nuevaEntrega);
+
+            this.hasEntregaClient.create_XML(hasEntrega);
+
+            return "misEntregas?refresh=1&faces-redirect=true";
         } else {
-            listaEntrega = new ArrayList<Entrega>();
+            return "index.jsf";
         }
-        
-        //busco la entrega que acabo de crear para obtener el id y
-        //poder recargarla
-        
-        nuevaEntrega = listaEntrega.get(listaEntrega.size()-1);
-        
-        this.hasEntrega= new HasEntrega();
-        
-        Response rSerie= this.serieClient.find_XML(Response.class, serieId);
-       
-        if (rSerie.getStatus() == 200) {
-            GenericType<Serie> genericType = new GenericType<Serie>() {
-            };
-            this.serie = rSerie.readEntity(genericType);
-            
-        }
-      
-        hasEntrega.setIdSerie(serie);
-        hasEntrega.setIdEntrega(nuevaEntrega);
-        
-        this.hasEntregaClient.create_XML(hasEntrega);
-       
-       
-        return "misEntregas?refresh=1&faces-redirect=true";
-            
+
     }
-    
-    
-     
-    
+
     private void obtenerSeries() {
-        
+
         this.serieClient = new SerieClient();
         Response r = this.serieClient.findAll_XML(Response.class);
-        
+
         if (r.getStatus() == 200) {
             GenericType<List<Serie>> genericType = new GenericType<List<Serie>>() {
             };
@@ -211,6 +210,6 @@ public class crearEntregaManagedBean {
         } else {
             this.series = new ArrayList<Serie>();
         }
-        
+
     }
 }

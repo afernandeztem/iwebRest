@@ -37,43 +37,21 @@
                     window.location.replace("http://localhost:8080/B6clientREST/welcome.jsf");
                 }
             }
-            
-            function check() {
-                
-                var inputId = document.getElementById("myForm:serieId").value;
-                var result;
-                fetch('/B6servidorREST/webresources/entities.usuario/boolSerieDeUsuario/{inputId}', {
-           
-                }).then((datos) => {
-                    result = datos;
-                    console.log("Result: " + result);
 
-                });
-                
-                
-                if (result) {
-                    console.log("Res es true " + result);
-                    document.getElementById('myForm').submit();
-                } else {
-                    console.log("Res es false " + result);
-                    alert("Error, no puedes subir contenido a una serie que no es tuya.");
-                }
-            }
 
-            
         </script>    
     </h:head>
 
     <h:body>
         <ui:include src="/WEB-INF/navbar-Series.xhtml"/>
         <!--Las Entregas tienen un id, anotacion y fecha de entrega -->
-        
+
         <script src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
         <div style="padding: 20px">
-                
+
             <ui:repeat  value="#{crearEntregaManagedBean.series}" var="serie" rendered="#{!(misSeriesManagedBean.series.size() == 0)}">
-              
-               
+
+
                 <h:panelGroup layout="block" class="card" style="margin-bottom: 15px" rendered="#{misSeriesManagedBean.esMiSerie(serie.id) == true}">
                     <div class="card-header" >
                         <h6 class="mb-0">
@@ -116,12 +94,13 @@
 
                 <div class="form-group edit-profile-form-group">
 
-                    <a type="submit" class="btn btn-primary btn-raised" jsf:action="#{crearEntregaManagedBean.crear()}" onclick="check()">Aceptar</a>
+                    <a type="submit" class="btn btn-primary btn-raised" jsf:action="#{crearEntregaManagedBean.crear()}">Aceptar</a>
 
 
                 </div>
 
                 Los campos marcados con asterisco(*) son obligatorios. 
+                ¡Aviso! No funcionará crear una entrega de una serie que no te pertenezca.
 
 
             </h:form>
