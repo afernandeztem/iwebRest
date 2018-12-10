@@ -6,6 +6,7 @@
 package managed;
 
 import client.SerieClient;
+import client.UsuarioClient;
 import entity.Serie;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -151,5 +152,23 @@ public class editarSerieManagedBean {
         return "editarSerie.jsf?id=" + serie.getId();
         
     }
+    
+    public boolean esMiSerie (int idSerie){
+        System.out.println("Comprobando dueño de la serie con id: " + idSerie);
+        UsuarioClient userClient = new UsuarioClient();
+        String idSerieStr = "" + idSerie;
+        String r = userClient.findBoolSerieDeUsuario(idSerieStr);
+        
        
+        System.out.println("¿EsMiSerie? Respuesta:" + r);
+        if (r.equals("ok")) {
+            System.out.println("Sí, es mi serie, true");
+            return true;
+        } else {
+            System.out.println("NO es mi serie, false");
+            return false;
+        }
+        
+           
+    }
 }

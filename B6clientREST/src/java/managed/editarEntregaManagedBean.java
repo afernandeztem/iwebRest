@@ -6,7 +6,10 @@
 package managed;
 
 import client.EntregaClient;
+import client.HasEntregaClient;
+import client.UsuarioClient;
 import entity.Entrega;
+import entity.Serie;
 import java.util.Date;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -133,5 +136,34 @@ public class editarEntregaManagedBean {
         
     }
     
-
+    public boolean esMiEntrega (int idEntrega){
+        System.out.println("Comprobando dueño de la serie con id: " + idEntrega);
+        UsuarioClient userClient = new UsuarioClient();
+        String idSerieStr = "" + idEntrega;
+        
+        HasEntregaClient hasEntregaClient = new HasEntregaClient();
+        Serie serie = null;
+        
+        Response rEntrega = hasEntregaClient.findSerieConEntrega_XML(Response.class, Integer.toString(idEntrega));
+        if (rEntrega.getStatus() == 200) {
+            GenericType<Serie> genericType = new GenericType<Serie>() {
+            };
+            serie= rEntrega.readEntity(genericType);
+        }
+        
+        String r = userClient.findBoolSerieDeUsuario(Integer.toString(serie.getId()));
+        
+       
+        System.out.println("¿EsMiSerie? Respuesta:" + r);
+        if (r.equals("ok")) {
+            System.out.println("Sí, es mi serie, true");
+            return true;
+        } else {
+            System.out.println("NO es mi serie, false");
+            return false;
+        }
+        
+           
+    }
+    
 }
