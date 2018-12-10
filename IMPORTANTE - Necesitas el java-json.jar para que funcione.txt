@@ -1,0 +1,15 @@
+¡Importante!
+
+Para que la aplicación web funcione correctamente, será necesario importar el archivo java-json.jar
+Este archivo se encuentra en el directorio:
+...../iweb/java-json.jar (en el propio directorio raíz)
+(Está en la memoria explicado en el apartado "DEPENDENCIAS" pero lo repetimos aquí).
+
+Pasos:
+1. Abrir el proyecto completo en NetBeans
+2. Click derecho en el cliente "B6clientREST".
+3. Seleccionar "Resolve Reference Problem"
+4. Buscar el jar localizado en ..../iweb/java-json.jar (directorio raíz del proyecto).
+5. Si aparece alguna otra dependencia java-json.jar relacionada, repetir el punto 4.
+
+Gracias por su paciencia, disfrute de la Aplicación Web :)
